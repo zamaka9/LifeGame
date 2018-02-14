@@ -15,15 +15,17 @@ namespace LifeGame
             Creature.drawer = drawer;
         }
 
-        public Creature(Creature parent)
+        public Creature(CreatureMgr mgr,Creature parent)
         {
+            this.mgr = mgr;
             Gene = new Gene(parent.Gene);
 
             Size = Gene.Size;
             MaxHP = Gene.HP;
             HP = MaxHP;
             MaxNutrition = Gene.Nutrition;
-            Nutrition = MaxNutrition;
+            
+            Nutrition = parent.Nutrition;//汚いので直したい
 
             X = parent.X + Program.Rand.Next(-20, 20);
             Y = parent.Y + Program.Rand.Next(-20, 20);
@@ -37,8 +39,9 @@ namespace LifeGame
             Existence = true;
             Alive = true;
         }
-        public Creature()
+        public Creature(CreatureMgr mgr)
         {
+            this.mgr = mgr;
             Gene = new Gene();
 
             Size = Gene.Size;
@@ -63,15 +66,36 @@ namespace LifeGame
         {
             if (Alive == true)
             {//生存なう
-                MaxHP--;
-                HP--;
+                MaxHP-=10;
+                HP-=10;
                 ActMgr.Update();
+
+                //何だか生物が変なところ行くので仮の処置
+                if (X < 0)
+                {
+                    X+= Program.World_X;
+                }else if(X> Program.World_X)
+                {
+                    X -= Program.World_X;
+                }
+                if (Y < 0)
+                {
+                    Y += Program.World_Y;
+                }
+                else if (Y > Program.World_Y)
+                {
+                    Y -= Program.World_Y;
+                }
 
                 if (HP <= 0)
                 {
                     Alive = false;
                     deadTime = Time;
+                    //最寄りの生物に栄養加算。あまりきれいな形じゃないので後々Actあたりを使って綺麗にしたい
+                    Creature nearest = this.GetNearestCreature();
+                    nearest.Nutrition = nearest.Nutrition + this.Nutrition;
                 }
+
             }
             else
             {
@@ -93,6 +117,29 @@ namespace LifeGame
             {
                 //DrawCircle((int)X, (int)Y, (int)Size / 20, GetColor(50, 50, 50), TRUE);
             }
+        }
+
+        //引数で与えられた生物との距離の2乗を返す。GetNearestCreatureで使うための存在
+        public double DistanceSquareFrom(Creature c)
+        {
+            return (this.X - c.X) * (this.X - c.X) + (this.Y - c.Y) * (this.Y - c.Y);
+        }
+
+        //最寄りの生物を取得。あまりきれいな形じゃないので後々Actあたりを使って綺麗にしたい
+        public Creature GetNearestCreature()
+        {
+            Creature nearest=null;
+            double distance=Double.MaxValue;
+            foreach(Creature c in this.mgr.CreatureList)
+            {
+                if (c == this) continue;
+                double d = c.DistanceSquareFrom(this);
+                if ( d < distance) {
+                    nearest = c;
+                    distance = d;
+                }
+            }
+            return nearest;
         }
 
 
@@ -121,6 +168,8 @@ namespace LifeGame
         ActMgr ActMgr = new ActMgr();//行動パターン管理クラス
 
         public List<Creature> TargetList { get; set; } = new List<Creature>();//同エリア内のCreatureを持つリストを指すポインタ
+
+        public CreatureMgr mgr;//CreatureMgrを格納する。コンストラクタで登録。staticにするか迷ったけど特に必要性がないので普通で
     }
 }
 

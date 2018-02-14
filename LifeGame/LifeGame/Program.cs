@@ -23,7 +23,7 @@ namespace LifeGame
         public const int Window_Y = 480;//ウィンドウの縦幅
 
 
-        public const int MaxCreature = 100;//オブジェクトの最大数(←予定　現在は初期オブジェクト数)
+        public const int MaxCreature = 10;//オブジェクトの最大数(←予定　現在は初期オブジェクト数)
 
 
         [STAThread]

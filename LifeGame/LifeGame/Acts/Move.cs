@@ -8,10 +8,14 @@ namespace LifeGame.Acts
 {
     class Move:Act
     {
+        public　Move(Creature owner)
+        {
+            this.owner = owner;
+        }
         public override void Initialize()
         {
             SpeedLevel = Program.Rand.Next(9);
-            MaxSpeed = (Program.Rand.Next(50) + 1) / 10.0f;
+            MaxSpeed = (Program.Rand.Next(20) + 1) / 10.0f;
             //Speed = rand_normal(1.0f,1.9f);
             Direction = (float)((Program.Rand.Next(359) / 180.0f) * Math.PI);
             Speed = MaxSpeed * SpeedLevel / 10;
@@ -41,6 +45,9 @@ namespace LifeGame.Acts
                 Direction = (float)((Program.Rand.Next(359) / 180.0f) * Math.PI);
                 Speed = MaxSpeed * SpeedLevel / 10;
             }
+            owner.X += (float)Math.Cos(Direction) * Speed;
+            owner.Y += (float)Math.Sin(Direction) * Speed;
+
             //栄養が足りていれば
             /*if (Itself->GetNut().GetNutSum() > Speed)
             {
@@ -55,5 +62,8 @@ namespace LifeGame.Acts
         float Speed;//現在移動速度
         int SpeedLevel;//移動速度の段階（10段階で0で止まる）
         float Direction;//向き
+
+        Creature owner;//仮
+
     }
 }
