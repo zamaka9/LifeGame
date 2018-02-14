@@ -24,7 +24,7 @@ namespace LifeGame
             //Creatureの登録
             for (int i = 0; i < Program.MaxCreature; i++)
             {
-                CreatureList.Add(new Creature());
+                CreatureList.Add(new Creature(this));
             }
         }
 
@@ -32,7 +32,7 @@ namespace LifeGame
         {
             foreach (Creature newParent in ParentList)
             {
-                CreatureList.Add(new Creature(newParent));
+                CreatureList.Add(new Creature(this,newParent));
             }
             ParentList.Clear();
 
@@ -64,7 +64,7 @@ namespace LifeGame
 
             //生物数を表示
             DX.DrawString(4, Program.Window_Y - 20, CreatureList.Count.ToString(), DX.GetColor(255, 255, 255));
-            
+
             DX.DrawString(0, 0, (TimeCount / 3600 + 1).ToString() + "年目", DX.GetColor(255, 255, 255));
         }
 
@@ -75,7 +75,8 @@ namespace LifeGame
 
         Land Land;
         Drawer Drawer;
-        List<Creature> CreatureList = new List<Creature>();
+
+        public List<Creature> CreatureList = new List<Creature>();
 
         List<Creature> ParentList= new List<Creature>();//CreateCreature用 親リスト
 

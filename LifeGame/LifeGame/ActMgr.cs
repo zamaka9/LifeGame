@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LifeGame.Acts;
 
 namespace LifeGame
 {
@@ -15,15 +16,19 @@ namespace LifeGame
             {
                 switch (act)
                 {
-                    /*case 0:
-                        ActList.Add(new Move(itself, TargetList));//仮;
+                   
+                    case 0:
+                        ActList.Add(new Move());//仮;
                         break;
-                    case 1:
-                        ActList.Add(new Attack(itself, TargetList));//仮
-                        break;
+                    /*
+               case 1:
+                   ActList.Add(new Attack(itself, TargetList));//仮
+                   break;
+                   */
                     case 2:
-                        ActList.Add(new Divide(itself, TargetList));//仮
+                        ActList.Add(new Divide());//仮
                         break;
+                        /*
                     case 3:
                         ActList.Add(new Prey(itself, TargetList));//仮
                         break;
@@ -42,7 +47,7 @@ namespace LifeGame
             //Actの初期化
             foreach (Act act in ActList)
             {
-                act.Initialize();
+                act.Initialize(owner);
             }
         }
 

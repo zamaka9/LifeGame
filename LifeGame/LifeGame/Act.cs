@@ -11,7 +11,7 @@ namespace LifeGame
         public static CreatureMgr CreatureMgr;
         public static Land Land;
 
-        public abstract void Initialize();
+        public abstract void Initialize(Creature owner);
 
         public abstract void Update();
     }
