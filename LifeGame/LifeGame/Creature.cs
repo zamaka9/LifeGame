@@ -22,7 +22,7 @@ namespace LifeGame
 
             Size = Gene.Size;
             MaxHP = Gene.HP;
-            HP = MaxHP;
+            HP =MaxHP;
             MaxNutrition = Gene.Nutrition;
             
             Nutrition = parent.Nutrition;//汚いので直したい
@@ -46,7 +46,7 @@ namespace LifeGame
 
             Size = Gene.Size;
             MaxHP = Gene.HP;
-            HP = MaxHP;
+            HP = Program.Rand.Next(MaxHP);
             MaxNutrition = Gene.Nutrition;
             Nutrition = MaxNutrition;           //これだと参照のコピーで実体移してないから後で変更の必要あり
 
