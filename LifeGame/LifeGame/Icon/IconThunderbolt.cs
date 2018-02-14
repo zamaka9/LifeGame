@@ -19,7 +19,7 @@ namespace LifeGame
         {
             if (ClickFlag == true)
             {
-                Thunderbolt_X = ;
+                Thunderbolt_X = 0;
                 List<Creature> CList = Land.GetCList(clickX, clickY);
                 foreach (Creature creature in CList)
                 {
@@ -33,7 +33,7 @@ namespace LifeGame
         {
             if (ClickFlag == true)
             {
-                DX.DrawBillboard3D(VGet(Thunderbolt_X, 0.0f, Thunderbolt_Y), 0.5f, 0.0f, 100.0f, 0.0f, GH[(TimeCount / AnimeTime)], TRUE);
+               // DX.DrawBillboard3D(VGet(Thunderbolt_X, 0.0f, Thunderbolt_Y), 0.5f, 0.0f, 100.0f, 0.0f, GH[(TimeCount / AnimeTime)], TRUE);
             }
         }
 

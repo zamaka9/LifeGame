@@ -123,3 +123,4 @@ namespace LifeGame
         public List<Creature> TargetList { get; set; } = new List<Creature>();//同エリア内のCreatureを持つリストを指すポインタ
     }
 }
+
