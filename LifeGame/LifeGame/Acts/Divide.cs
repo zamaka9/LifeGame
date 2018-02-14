@@ -9,14 +9,10 @@ namespace LifeGame.Acts
     class Divide:Act
     {
         
-        public Divide(Creature owner)
-        {
-            this.owner = owner;
-            this.mgr = owner.mgr;
-        } 
-        public override void Initialize()
+        public override void Initialize(Creature owner)
         {
             cost = owner.Size * 2 ;
+            this.owner = owner;
         }
         
         public override void Update()
@@ -26,11 +22,10 @@ namespace LifeGame.Acts
                 if (owner.Nutrition.Sum > cost)
                 {
                     owner.Nutrition = (owner.Nutrition / 2);
-                    mgr.CreateCreature(owner);
+                    CreatureMgr.CreateCreature(owner);
                 }
             }
         }
-        CreatureMgr mgr;
         Creature owner;
         int cost;
     }

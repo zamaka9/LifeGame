@@ -8,12 +8,11 @@ namespace LifeGame.Acts
 {
     class Move:Act
     {
-        public　Move(Creature owner)
+       
+        public override void Initialize(Creature owner)
         {
             this.owner = owner;
-        }
-        public override void Initialize()
-        {
+
             SpeedLevel = Program.Rand.Next(9);
             MaxSpeed = (Program.Rand.Next(20) + 1) / 10.0f;
             //Speed = rand_normal(1.0f,1.9f);

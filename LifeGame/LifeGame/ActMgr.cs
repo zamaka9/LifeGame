@@ -18,8 +18,7 @@ namespace LifeGame
                 {
                    
                     case 0:
-                        //汚いので直したい ownerをActクラスのほうで持ってほしい
-                        ActList.Add(new Move(owner));//仮;
+                        ActList.Add(new Move());//仮;
                         break;
                     /*
                case 1:
@@ -27,8 +26,7 @@ namespace LifeGame
                    break;
                    */
                     case 2:
-                        //汚いので直したい ownerをActクラスのほうで持ってほしい
-                        ActList.Add(new Divide(owner));//仮
+                        ActList.Add(new Divide());//仮
                         break;
                         /*
                     case 3:
@@ -49,7 +47,7 @@ namespace LifeGame
             //Actの初期化
             foreach (Act act in ActList)
             {
-                act.Initialize();
+                act.Initialize(owner);
             }
         }
 
