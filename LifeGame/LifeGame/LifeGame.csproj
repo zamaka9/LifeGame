@@ -11,6 +11,21 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -33,11 +48,17 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Data\Thumbs.db" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Act.cs" />
     <Compile Include="ActMgr.cs" />
+    <Compile Include="Acts\Age.cs" />
+    <Compile Include="Acts\Attack.cs" />
+    <Compile Include="Acts\Divide.cs" />
     <Compile Include="Acts\Move.cs" />
+    <Compile Include="Acts\Produce.cs" />
+    <Compile Include="Acts\Recover.cs" />
     <Compile Include="Creature.cs" />
     <Compile Include="CreatureMgr.cs" />
     <Compile Include="Drawer.cs" />
@@ -50,6 +71,37 @@
     <Compile Include="Land.cs" />
     <Compile Include="Nutrition.cs" />
     <Compile Include="Program.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.6.1 %28x86 および x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Data\Thunderbolt.png" />
+    <Content Include="Data\スキャンアイコン.png" />
+    <Content Include="Data\テンシ.png" />
+    <Content Include="Data\テンシ大.png" />
+    <Content Include="Data\原初生物.png" />
+    <Content Include="Data\原初生物A.gif" />
+    <Content Include="Data\原初生物Anim.png" />
+    <Content Include="Data\原初生物B.gif" />
+    <Content Include="Data\図鑑アイコン.png" />
+    <Content Include="Data\図鑑アイコンカラー.png" />
+    <Content Include="Data\地面枠.png" />
+    <Content Include="Data\目アイコン.png" />
+    <Content Include="Data\芽.png" />
+    <Content Include="Data\虫メガネアイコン.png" />
+    <Content Include="Data\雷アイコン.png" />
+    <Content Include="Data\雷アイコンカラー.png" />
+    <Content Include="Data\雷アイコンカラー2.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
