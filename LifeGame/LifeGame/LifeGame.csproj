@@ -48,7 +48,6 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Data\Thumbs.db" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Act.cs" />
@@ -85,23 +84,23 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Data\Thunderbolt.png" />
-    <Content Include="Data\スキャンアイコン.png" />
-    <Content Include="Data\テンシ.png" />
-    <Content Include="Data\テンシ大.png" />
-    <Content Include="Data\原初生物.png" />
-    <Content Include="Data\原初生物A.gif" />
-    <Content Include="Data\原初生物Anim.png" />
-    <Content Include="Data\原初生物B.gif" />
-    <Content Include="Data\図鑑アイコン.png" />
-    <Content Include="Data\図鑑アイコンカラー.png" />
-    <Content Include="Data\地面枠.png" />
-    <Content Include="Data\目アイコン.png" />
-    <Content Include="Data\芽.png" />
-    <Content Include="Data\虫メガネアイコン.png" />
-    <Content Include="Data\雷アイコン.png" />
-    <Content Include="Data\雷アイコンカラー.png" />
-    <Content Include="Data\雷アイコンカラー2.png" />
+    <Content Include="obj\Debug\Data\Thunderbolt.png" />
+    <Content Include="obj\Debug\Data\スキャンアイコン.png" />
+    <Content Include="obj\Debug\Data\テンシ.png" />
+    <Content Include="obj\Debug\Data\テンシ大.png" />
+    <Content Include="obj\Debug\Data\原初生物.png" />
+    <Content Include="obj\Debug\Data\原初生物A.gif" />
+    <Content Include="obj\Debug\Data\原初生物Anim.png" />
+    <Content Include="obj\Debug\Data\原初生物B.gif" />
+    <Content Include="obj\Debug\Data\図鑑アイコン.png" />
+    <Content Include="obj\Debug\Data\図鑑アイコンカラー.png" />
+    <Content Include="obj\Debug\Data\地面枠.png" />
+    <Content Include="obj\Debug\Data\目アイコン.png" />
+    <Content Include="obj\Debug\Data\芽.png" />
+    <Content Include="obj\Debug\Data\虫メガネアイコン.png" />
+    <Content Include="obj\Debug\Data\雷アイコン.png" />
+    <Content Include="obj\Debug\Data\雷アイコンカラー.png" />
+    <Content Include="obj\Debug\Data\雷アイコンカラー2.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
