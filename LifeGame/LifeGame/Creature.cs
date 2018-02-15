@@ -25,7 +25,7 @@ namespace LifeGame
             HP =MaxHP;
             MaxNutrition = Gene.Nutrition;
             
-            Nutrition = parent.Nutrition;//汚いので直したい
+            Nutrition = parent.Nutrition.Copy();
 
             X = parent.X + Program.Rand.Next(-20, 20);
             Y = parent.Y + Program.Rand.Next(-20, 20);
@@ -48,7 +48,7 @@ namespace LifeGame
             MaxHP = Gene.HP;
             HP = Program.Rand.Next(MaxHP);
             MaxNutrition = Gene.Nutrition;
-            Nutrition = MaxNutrition;           //これだと参照のコピーで実体移してないから後で変更の必要あり
+            Nutrition = MaxNutrition.Copy();
 
             X = (float)Program.Rand.Next(Program.World_X - 1);
             Y = (float)Program.Rand.Next(Program.World_Y - 1);
@@ -92,8 +92,7 @@ namespace LifeGame
                     Alive = false;
                     deadTime = Time;
                     //最寄りの生物に栄養加算。あまりきれいな形じゃないので後々Actあたりを使って綺麗にしたい
-                    Creature nearest = this.GetNearestCreature();
-                    nearest.Nutrition = nearest.Nutrition + this.Nutrition;
+                    OnDied();
                 }
 
             }
@@ -117,6 +116,13 @@ namespace LifeGame
             {
                 //DrawCircle((int)X, (int)Y, (int)Size / 20, GetColor(50, 50, 50), TRUE);
             }
+        }
+
+        //メソッドとして独立
+        public void OnDied()
+        {
+            Creature nearest = this.GetNearestCreature();
+            nearest.Nutrition = nearest.Nutrition + this.Nutrition;
         }
 
         //引数で与えられた生物との距離の2乗を返す。GetNearestCreatureで使うための存在

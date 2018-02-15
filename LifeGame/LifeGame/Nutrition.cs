@@ -91,6 +91,12 @@ namespace LifeGame
             }
         }
 
+        //コピーする。主にMaxNutritionからNutritionに移すために存在。ただしMaxNutritionのシステムは再考の余地あり
+        public Nutrition Copy()
+        {
+            return new Nutrition(Red, Green, Blue);
+        }
+
         //栄養量の総和を返す
         public int Sum => (Red + Green + Blue);
 

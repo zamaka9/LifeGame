@@ -48,6 +48,7 @@ namespace LifeGame
             ActList.Add(Program.Rand.Next(6));
             */
             ActList.Add(0);
+            //ActList.Add(1);
             ActList.Add(2);
         }
 

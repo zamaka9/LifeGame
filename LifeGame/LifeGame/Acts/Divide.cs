@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LifeGame.Acts
+﻿namespace LifeGame.Acts
 {
     class Divide:Act
     {
         
         public override void Initialize(Creature owner)
         {
+            base.Initialize(owner);
             cost = owner.Size * 2 ;
-            this.owner = owner;
         }
         
         public override void Update()
@@ -26,7 +20,6 @@ namespace LifeGame.Acts
                 }
             }
         }
-        Creature owner;
         int cost;
     }
 }

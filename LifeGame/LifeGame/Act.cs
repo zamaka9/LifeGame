@@ -10,9 +10,13 @@ namespace LifeGame
     {
         public static CreatureMgr CreatureMgr;
         public static Land Land;
+        public Creature owner;
 
-        public abstract void Initialize(Creature owner);
+        public virtual void Initialize(Creature owner) {
+            this.owner = owner;
+        }
 
         public abstract void Update();
+
     }
 }

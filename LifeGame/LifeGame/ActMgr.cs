@@ -16,15 +16,15 @@ namespace LifeGame
             {
                 switch (act)
                 {
-                   
+
                     case 0:
                         ActList.Add(new Move());//仮;
                         break;
-                    /*
-               case 1:
-                   ActList.Add(new Attack(itself, TargetList));//仮
-                   break;
-                   */
+
+                    case 1:
+                        ActList.Add(new Attack());//仮
+                        break;
+
                     case 2:
                         ActList.Add(new Divide());//仮
                         break;

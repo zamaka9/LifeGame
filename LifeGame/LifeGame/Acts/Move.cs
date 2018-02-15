@@ -11,7 +11,7 @@ namespace LifeGame.Acts
        
         public override void Initialize(Creature owner)
         {
-            this.owner = owner;
+            base.Initialize(owner);
 
             SpeedLevel = Program.Rand.Next(9);
             MaxSpeed = (Program.Rand.Next(20) + 1) / 10.0f;
@@ -61,8 +61,6 @@ namespace LifeGame.Acts
         float Speed;//現在移動速度
         int SpeedLevel;//移動速度の段階（10段階で0で止まる）
         float Direction;//向き
-
-        Creature owner;//仮
 
     }
 }
