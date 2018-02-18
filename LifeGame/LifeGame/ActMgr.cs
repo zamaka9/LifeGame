@@ -28,19 +28,22 @@ namespace LifeGame
                     case 2:
                         ActList.Add(new Divide());//仮
                         break;
-                        /*
-                    case 3:
-                        ActList.Add(new Prey(itself, TargetList));//仮
+                    /*
+                case 3:
+                    ActList.Add(new Prey(itself, TargetList));//仮
+                    break;
+                case 4:
+                    ActList.Add(new Recover(itself, TargetList));//仮
+                    break;
+                case 5:
+                    ActList.Add(new Age(itself, TargetList));//仮
+                    break;
+                case 6:
+                    ActList.Add(new Produce(itself, TargetList));//仮
+                    break;*/
+                    case 7:
+                        ActList.Add(new GetNutFromLand());
                         break;
-                    case 4:
-                        ActList.Add(new Recover(itself, TargetList));//仮
-                        break;
-                    case 5:
-                        ActList.Add(new Age(itself, TargetList));//仮
-                        break;
-                    case 6:
-                        ActList.Add(new Produce(itself, TargetList));//仮
-                        break;*/
                 }
             }
 

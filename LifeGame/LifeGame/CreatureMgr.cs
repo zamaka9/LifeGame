@@ -73,8 +73,9 @@ namespace LifeGame
             ParentList.Add(Parent);
         }
 
-        Land Land;
-        Drawer Drawer;
+        //LandやDrawerがCreatureから参照できないのが不便だったからpublicにしちゃった
+        public Land Land;
+        public Drawer Drawer;
 
         public List<Creature> CreatureList = new List<Creature>();
 

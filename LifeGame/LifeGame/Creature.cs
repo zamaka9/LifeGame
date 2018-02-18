@@ -91,7 +91,7 @@ namespace LifeGame
                 {
                     Alive = false;
                     deadTime = Time;
-                    //最寄りの生物に栄養加算。あまりきれいな形じゃないので後々Actあたりを使って綺麗にしたい
+                    //栄養ばらまく。後々は、まず死体になってそれが分解されていく感じにしたい
                     OnDied();
                 }
 
@@ -121,8 +121,23 @@ namespace LifeGame
         //メソッドとして独立
         public void OnDied()
         {
+            /*栄養プレゼントしてた時代
             Creature nearest = this.GetNearestCreature();
             nearest.Nutrition = nearest.Nutrition + this.Nutrition;
+            */
+            //Landをどこから参照するか迷ったけど、Creaturemgrからにした
+            //周囲9マスに平等に栄養をばらまく
+            Land land = mgr.Land;
+            Nutrition nut = Nutrition / 9;
+            for (int x = -1; x <= 1; x++)
+            {
+                for (int y = -1; y <= 1; y++)
+                {
+                    //Console.WriteLine(X + x*50 + "," + Y + y * 50);
+                    land.SetLandNutrition(X + x * 50, Y + y * 50, land.GetLandNutrition(X + x * 50, Y + y * 50) + nut);
+                }
+            }
+           
         }
 
         //引数で与えられた生物との距離の2乗を返す。GetNearestCreatureで使うための存在

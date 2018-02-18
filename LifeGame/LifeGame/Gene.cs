@@ -50,6 +50,7 @@ namespace LifeGame
             ActList.Add(0);
             //ActList.Add(1);
             ActList.Add(2);
+            ActList.Add(7);
         }
 
         public int HP { get; private set; } = 0;//最大体力

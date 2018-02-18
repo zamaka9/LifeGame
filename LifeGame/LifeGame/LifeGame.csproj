@@ -56,6 +56,7 @@
     <Compile Include="Acts\Attack.cs" />
     <Compile Include="Acts\Divide.cs" />
     <Compile Include="Acts\Move.cs" />
+    <Compile Include="Acts\GetNutFromLand.cs" />
     <Compile Include="Acts\Produce.cs" />
     <Compile Include="Acts\Recover.cs" />
     <Compile Include="Creature.cs" />
