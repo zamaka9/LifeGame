@@ -24,6 +24,14 @@ namespace LifeGame
             return this;
         }
 
+        public Nutrition Rand(int randMin, int randMax)
+        {
+            Red = Program.Rand.Next(randMin, randMax);
+            Green = Program.Rand.Next(randMin, randMax);
+            Blue = Program.Rand.Next(randMin, randMax);
+            return this;
+        }
+
         public static Nutrition operator +(Nutrition n1, Nutrition n2)
         {
             return new Nutrition(n1.Red + n2.Red, n1.Blue + n2.Blue, n1.Green + n2.Green);

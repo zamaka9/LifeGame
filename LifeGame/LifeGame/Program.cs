@@ -62,6 +62,7 @@ namespace LifeGame
             God God = new God();
 
             Drawer.Initialize();
+            Land.Initialize(Drawer);
             CreatureMgr.Initialize(Land, Drawer);
             God.Initialize(Land, Drawer);
 

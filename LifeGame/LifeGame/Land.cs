@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DxLibDLL;
 
 namespace LifeGame
 {
@@ -13,6 +14,12 @@ namespace LifeGame
     {
         public Land()
         {
+
+        }
+
+        public void Initialize(Drawer drawer){
+            Drawer = drawer;
+
             //Spaceを初期化
             Space = new List<Creature>[Program.Space_X, Program.Space_Y];
             LandNutrition = new Nutrition[Program.Space_X, Program.Space_Y];
@@ -22,6 +29,7 @@ namespace LifeGame
                 {
                     Space[i, j] = new List<Creature>();
                     LandNutrition[i, j] = new Nutrition();
+                    LandNutrition[i, j].Rand(90, 110);
                 }
             }
         }
@@ -36,7 +44,33 @@ namespace LifeGame
 
         public void Draw()
         {
-
+            for(int i = 0; i < Program.Space_X; i++){
+                for(int j = 0; j < Program.Space_Y; j++){
+                    int x1 = i * Program.Space_Size;
+                    int y1 = j * Program.Space_Size;
+                    int x2 = (i + 1) * Program.Space_Size;
+                    int y2 = j * Program.Space_Size;
+                    int x3 = i * Program.Space_Size;
+                    int y3 = (j + 1) * Program.Space_Size;
+                    int x4 = (i + 1) * Program.Space_Size;
+                    int y4 = (j + 1) * Program.Space_Size;
+                    Drawer.ChangeWtoL(ref x1, ref y1);
+                    Drawer.ChangeWtoL(ref x2, ref y2);
+                    Drawer.ChangeWtoL(ref x3, ref y3);
+                    Drawer.ChangeWtoL(ref x4, ref y4);
+                    DX.DrawTriangle(x1, y1,
+                                    x2, y2,
+                                    x3, y3,
+                                    DX.GetColor(LandNutrition[i,j].Red, LandNutrition[i,j].Green, LandNutrition[i,j].Blue), DX.TRUE
+                    );
+                    DX.DrawTriangle(x2, y2,
+                                    x3, y3,
+                                    x4, y4,
+                                    DX.GetColor(LandNutrition[i,j].Red, LandNutrition[i,j].Green, LandNutrition[i,j].Blue), DX.TRUE
+                    );
+                    Console.WriteLine("test");
+                }
+            }
         }
 
         public void AddCList(float x, float y, Creature pointer)
@@ -70,6 +104,7 @@ namespace LifeGame
 
         List<Creature>[,] Space;
         Nutrition[,] LandNutrition;
+        Drawer Drawer;
 
         int ReturnX(float x)
         {
