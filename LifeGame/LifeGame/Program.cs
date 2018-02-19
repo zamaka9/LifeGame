@@ -60,6 +60,7 @@ namespace LifeGame
             Land Land = new Land();
             CreatureMgr CreatureMgr = new CreatureMgr();
             God God = new God();
+            ActRegister.Register();
 
             Drawer.Initialize();
             Land.Initialize(Drawer);

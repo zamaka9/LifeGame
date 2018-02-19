@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="Act.cs" />
     <Compile Include="ActMgr.cs" />
+    <Compile Include="ActRegister.cs" />
     <Compile Include="Acts\Age.cs" />
     <Compile Include="Acts\Attack.cs" />
     <Compile Include="Acts\Divide.cs" />
