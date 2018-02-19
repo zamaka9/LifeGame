@@ -129,12 +129,15 @@ namespace LifeGame
             //周囲9マスに平等に栄養をばらまく
             Land land = mgr.Land;
             Nutrition nut = Nutrition / 9;
+            int i = 0;
             for (int x = -1; x <= 1; x++)
             {
                 for (int y = -1; y <= 1; y++)
                 {
+                    
                     //Console.WriteLine(X + x*50 + "," + Y + y * 50);
-                    land.SetLandNutrition(X + x * 50, Y + y * 50, land.GetLandNutrition(X + x * 50, Y + y * 50) + nut);
+                    land.SetLandNutrition(X + x * 50, Y + y * 50, land.GetLandNutrition(X + x * 50, Y + y * 50) + Nutrition.Divide(9,i));
+                    i++;
                 }
             }
            

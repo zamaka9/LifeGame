@@ -105,6 +105,18 @@ namespace LifeGame
             return new Nutrition(Red, Green, Blue);
         }
 
+        ///<summary>
+        ///名前はDivideだけど分裂とは無関係なので注意
+        ///ちょっと説明が難しい関数なんだけど、基本的には今の栄養値をbyで割ったNutritionを返す
+        ///でも、余りを考えてくれるというか、例えば元がR=10,G=11,B=7だったら
+        ///by=9,of=1だと(2,2,1)を返し、by=9,of=2だと(1,2,1)、by=9,of=8だと(1,1,0)を返す
+        ///というか、周囲に栄養ばらまいたときに、端数が丸められて栄養が目減りするのを防ぐための関数
+        ///</summary>
+        public Nutrition Divide(int by,int of)
+        {
+            return new Nutrition(Red % by < of ? 0 : 1, Green % by < of ? 0 : 1, Blue % by < of ? 0 : 1) + this / by;
+        }
+
         //栄養量の総和を返す
         public int Sum => (Red + Green + Blue);
 
