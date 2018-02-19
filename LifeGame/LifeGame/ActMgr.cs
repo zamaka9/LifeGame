@@ -56,12 +56,25 @@ namespace LifeGame
 
         public void Update()
         {
+            bool isTimeToUpdate = ++timer >= timerMax;
+            if (isTimeToUpdate)
+            {
+                timer = 0;
+            }
             foreach (Act act in ActList)
             {
-                act.Update();
+                
+                if (isTimeToUpdate || act.ShouldBeUpdatedEveryFrame())
+                {
+                    act.Update();
+                }
+                
             }
         }
 
         List<Act> ActList= new List<Act>();
+        public int timer;//毎フレームUpdateしていると重いし、新しいActの方でも不都合があるので60Fに一度にします
+        public int timerMax = 60;
+
     }
 }

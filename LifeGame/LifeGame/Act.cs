@@ -18,5 +18,11 @@ namespace LifeGame
 
         public abstract void Update();
 
+        /// <summary>
+        /// 毎フレームUpdateを呼ぶ必要があるなら、trueを返す
+        /// </summary>
+        /// <returns></returns>
+        public virtual bool ShouldBeUpdatedEveryFrame() { return false; }
+
     }
 }
