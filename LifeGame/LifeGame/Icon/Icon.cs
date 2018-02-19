@@ -21,8 +21,10 @@ namespace LifeGame
             ClickFlag = true;
         }
 
+        public static const int IconSize = 64;
         public static Land Land { get; set; }
         public static Drawer Drawer { get; set; }
+        public int GraphicHandle { get; protected set; }
         protected int clickX;
         protected int clickY;
         protected bool ClickFlag;

@@ -68,7 +68,6 @@ namespace LifeGame
                                     x4, y4,
                                     DX.GetColor(LandNutrition[i,j].Red, LandNutrition[i,j].Green, LandNutrition[i,j].Blue), DX.TRUE
                     );
-                    //Console.WriteLine("test");
                 }
             }
         }

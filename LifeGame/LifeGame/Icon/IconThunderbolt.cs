@@ -13,6 +13,7 @@ namespace LifeGame
         {
             GH = new int[AnimeNumber];
             DX.LoadDivGraph("Data/Thunderbolt.png", AnimeNumber, 4, 3, 64, 64, GH);
+            GraphicHandle = DX.LoadGraph("Data/雷アイコンカラー.png");
         }
 
         public override void Update()

@@ -13,6 +13,7 @@ namespace LifeGame
         {
             Object = null;
             TriCorGH = DX.LoadGraph("Data/三角カーソル.png");
+            GraphicHandle = DX.LoadGraph("Data/スキャンアイコン.png");
         }
 
         public override void Update()

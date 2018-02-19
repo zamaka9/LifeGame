@@ -13,8 +13,8 @@ namespace LifeGame
 
         public const int Space_Size = 50;//エリア一つ当たりの大きさ
 
-        public const int Space_X = 10;//エリアの横分割数
-        public const int Space_Y = 10;//エリアの縦分割数
+        public const int Space_X = 50;//エリアの横分割数
+        public const int Space_Y = 50;//エリアの縦分割数
 
         public const int World_X = Space_Size * Space_X;//ワールド座標の横最大値
         public const int World_Y = Space_Size * Space_Y;//ワールド座標の縦最大値
@@ -23,7 +23,7 @@ namespace LifeGame
         public const int Window_Y = 480;//ウィンドウの縦幅
 
 
-        public const int MaxCreature = 10;//オブジェクトの最大数(←予定　現在は初期オブジェクト数)
+        public const int MaxCreature = 100;//オブジェクトの最大数(←予定　現在は初期オブジェクト数)
 
 
         [STAThread]
