@@ -15,7 +15,7 @@ namespace LifeGame.Acts
             this.strength = owner.Size;
         }
 
-        public override void Update()
+        public override bool Update()
         {
             var target = owner.TargetList;
             if (target != null)
@@ -27,10 +27,12 @@ namespace LifeGame.Acts
                         if (strength - t.Size>10)
                         {
                             t.HP -= strength;
+                            return true;
                         }
                     }
                 }
             }
+            return false;
         }
         public int strength;
     }

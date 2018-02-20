@@ -15,14 +15,15 @@ namespace LifeGame.Acts
             this.requirement = new Nutrition(Program.Rand.Next(16), Program.Rand.Next(16), Program.Rand.Next(16));
         }
 
-        public override void Update()
+        public override bool Update()
         {
             if(owner.HP<owner.MaxHP && requirement < owner.Nutrition)
             {
                 owner.Nutrition -= requirement;
                 owner.HP += requirement.Sum;
-
+                return true;
             }
+            return false;
         }
         public Nutrition requirement;
     }

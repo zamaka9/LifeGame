@@ -11,8 +11,7 @@ namespace LifeGame
     {
         public void Initialize(Creature owner, List<Creature> targetList, List<int> actions)
         {
-            Act.ActMgr = this;
-            
+
             ActList = new List<Act>();
             foreach(int act in actions)
             {
@@ -75,7 +74,8 @@ namespace LifeGame
                 
                 if (isTimeToUpdate || act.ShouldBeUpdatedEveryFrame())
                 {
-                    act.Update();
+                    act.UpdateAndConsumeNut();
+                    
                 }
                 
             }

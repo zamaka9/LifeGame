@@ -15,12 +15,13 @@ namespace LifeGame.Acts
             base.Initialize(owner);
             this.requirement = owner.Size / 2;
         }
-        public override void Update()
+        public override bool Update()
         {
             Nutrition landnut = Land.GetLandNutrition(owner.X, owner.Y);
             Nutrition predation = landnut.Percent(requirement);
             Land.SetLandNutrition(owner.X, owner.Y, landnut - predation);
             owner.Nutrition += predation;
+            return true;
         }
         public int requirement;
     }
