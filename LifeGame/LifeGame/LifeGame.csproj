@@ -90,6 +90,8 @@
     <Content Include="obj\Debug\Data\スキャンアイコン.png" />
     <Content Include="obj\Debug\Data\テンシ.png" />
     <Content Include="obj\Debug\Data\テンシ大.png" />
+    <Content Include="obj\Debug\Data\三角カーソル.png" />
+    <Content Include="obj\Debug\Data\三角カーソルanime.png" />
     <Content Include="obj\Debug\Data\原初生物.png" />
     <Content Include="obj\Debug\Data\原初生物A.gif" />
     <Content Include="obj\Debug\Data\原初生物Anim.png" />
@@ -99,6 +101,7 @@
     <Content Include="obj\Debug\Data\土地スキャンアイコン.png" />
     <Content Include="obj\Debug\Data\地面枠.png" />
     <Content Include="obj\Debug\Data\目アイコン.png" />
+    <Content Include="obj\Debug\Data\空.png" />
     <Content Include="obj\Debug\Data\芽.png" />
     <Content Include="obj\Debug\Data\虫メガネアイコン.png" />
     <Content Include="obj\Debug\Data\雷アイコン.png" />
