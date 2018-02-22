@@ -41,7 +41,7 @@ namespace LifeGame
         {
             Size = Program.Rand.Next(254) + 1;
             HP = Size * 64 + Program.Rand.Next(255);
-            Nutrition.Rand(255);
+            Nutrition.Rand(Nutrition.MaxValue);
             /*
             ActList.Add(Program.Rand.Next(6));
             ActList.Add(Program.Rand.Next(6));

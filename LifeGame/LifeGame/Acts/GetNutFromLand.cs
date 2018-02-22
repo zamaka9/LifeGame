@@ -18,8 +18,8 @@ namespace LifeGame.Acts
         {
             Nutrition landnut = Land.GetLandNutrition(owner.X, owner.Y);
             //呼び出されるたび、合計で15の栄養を吸収
-            int nutToGet = 15;
-            if (landnut.Sum < 15)
+            int nutToGet = 900000;
+            if (landnut.Sum < 900000)
             {//Sumが15未満の時は、負の値になるのを避けるためSumの値だけ吸収
                 nutToGet = landnut.Sum;
             }

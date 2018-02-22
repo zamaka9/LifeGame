@@ -29,7 +29,7 @@ namespace LifeGame
                 {
                     Space[i, j] = new List<Creature>();
                     LandNutrition[i, j] = new Nutrition();
-                    LandNutrition[i, j].Rand(90, 110);
+                    LandNutrition[i, j].Rand(Nutrition.MaxValue/4, Nutrition.MaxValue / 2);
                 }
             }
         }
@@ -58,16 +58,16 @@ namespace LifeGame
                     Drawer.ChangeWtoL(ref x2, ref y2);
                     Drawer.ChangeWtoL(ref x3, ref y3);
                     Drawer.ChangeWtoL(ref x4, ref y4);
-                    DX.DrawTriangle(x1, y1,
+                     DX.DrawTriangle(x1, y1,
                                     x2, y2,
                                     x3, y3,
-                                    DX.GetColor(LandNutrition[i,j].Red, LandNutrition[i,j].Green, LandNutrition[i,j].Blue), DX.TRUE
+                                    DX.GetColor(LandNutrition[i,j].Red>>nbit, LandNutrition[i,j].Green >> nbit, LandNutrition[i,j].Blue >> nbit), DX.TRUE
                     );
                     DX.DrawTriangle(x2, y2,
                                     x3, y3,
                                     x4, y4,
-                                    DX.GetColor(LandNutrition[i,j].Red, LandNutrition[i,j].Green, LandNutrition[i,j].Blue), DX.TRUE
-                    );
+                                    DX.GetColor(LandNutrition[i,j].Red >> nbit, LandNutrition[i,j].Green>> nbit, LandNutrition[i,j].Blue >> nbit), DX.TRUE
+);
                 }
             }
         }
@@ -132,5 +132,6 @@ namespace LifeGame
             }
             return Y;
         }
+        public static int nbit = 16;//栄養値を16ビット右にシフトする(=65536で割る)と最大255になる
     }
 }

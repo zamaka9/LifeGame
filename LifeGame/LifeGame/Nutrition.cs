@@ -99,7 +99,7 @@ namespace LifeGame
         {
             if (Sum > 0)
             {
-                return new Nutrition(Red * value / Sum, Green * value / Sum, Blue * value / Sum);
+                return new Nutrition((int)(Red * ((double)value / (double)Sum)),(int)( Green * ((double)value / (double)Sum)),(int)( Blue * ((double)value / (double)Sum)));
             }
             else
             {
@@ -131,5 +131,7 @@ namespace LifeGame
         public int Red { get; private set; } = 0;
         public int Green { get; private set; } = 0;
         public int Blue { get; private set; } = 0;
+
+        public static int MaxValue = 0xffffff;//=16,777,215 栄養の最大値
     }
 }

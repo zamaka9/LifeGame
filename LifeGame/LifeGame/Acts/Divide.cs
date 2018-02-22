@@ -6,7 +6,7 @@
         public override void Initialize(Creature owner)
         {
             base.Initialize(owner);
-            cost = owner.Size * 2 ;
+            cost = owner.Size * 130000 ;
         }
         
         public override void Update()
