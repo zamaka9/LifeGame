@@ -14,7 +14,7 @@ namespace LifeGame.Acts
         {
             base.Initialize(owner);
         }
-        public override void Update()
+        public override bool Update()
         {
             Nutrition landnut = Land.GetLandNutrition(owner.X, owner.Y);
             //呼び出されるたび、合計で15の栄養を吸収
@@ -26,7 +26,7 @@ namespace LifeGame.Acts
             Nutrition predation = landnut.Percent(nutToGet);
             Land.SetLandNutrition(owner.X, owner.Y, landnut - predation);
             owner.Nutrition += predation;
-
+            return true;
         }
         //タイマーはActMgrの方で管理
     }

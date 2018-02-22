@@ -14,9 +14,10 @@ namespace LifeGame.Acts
             base.Initialize(owner);
         }
 
-        public override void Update()
+        public override bool Update()
         {
             owner.HP -= 10;
+            return true;
         }
     }
 }

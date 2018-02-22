@@ -20,7 +20,7 @@ namespace LifeGame.Acts
             Speed = MaxSpeed * SpeedLevel / 10;
         }
 
-        public override void Update()
+        public override bool Update()
         {
             //確率で向きと移動速度の変更
             //変更確率をfreqで指定 初期値10
@@ -44,10 +44,12 @@ namespace LifeGame.Acts
                 }
                 Direction = (float)((Program.Rand.Next(359) / 180.0f) * Math.PI);
                 Speed = MaxSpeed * SpeedLevel / 10;
+                //速度はCreatureの方で持つようにしました
+                owner.motionX = (float)Math.Cos(Direction) * Speed;
+                owner.motionY = (float)Math.Sin(Direction) * Speed;
+                return true;
             }
-            //速度はCreatureの方で持つようにしました
-            owner.motionX = (float)Math.Cos(Direction) * Speed;
-            owner.motionY = (float)Math.Sin(Direction) * Speed;
+            return false;
 
             //栄養が足りていれば
             /*if (Itself->GetNut().GetNutSum() > Speed)
