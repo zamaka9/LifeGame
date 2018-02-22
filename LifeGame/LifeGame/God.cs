@@ -11,7 +11,7 @@ namespace LifeGame
     {
         public void Initialize(Land land, Drawer drawer)
         {
-            icons = new Icon[2];
+            icons = new Icon[3];
             Drawer = drawer;
             Icon.Drawer = drawer;
             Icon.Land = land;
@@ -19,6 +19,7 @@ namespace LifeGame
             //各アイコンクラスの初期化
             icons[0] = new IconScan();
             icons[1] = new IconThunderbolt();
+            icons[2] = new IconLandScan();
             
             foreach(Icon icon in icons){
                 icon.Initialize();
@@ -39,7 +40,7 @@ namespace LifeGame
             {
                 //アイコンの変更の判定
                 if (Mouse_Y >= Program.Window_Y - 64 && Mouse_Y < Program.Window_Y&&
-                    Mouse_X >= Window_X - 128 - 64 * icons.Count()&&Mouse_X <= Window_X - 128)
+                    Mouse_X >= Program.Window_X - 128 - 64 * icons.Count()&&Mouse_X <= Program.Window_X - 128)
                 {
                     int n = (int)(Mouse_X - (Program.Window_X - 128 - 64 * icons.Count())) / 64;
                     if (Mouse_Button == DX.MOUSE_INPUT_LEFT)
@@ -74,34 +75,28 @@ namespace LifeGame
         public void Draw()
         {
             // 選択中のタイルを色付きで表示(仮)
-            int fX = Mouse_X;
-            int fY = Mouse_Y;
-            Drawer.ChangeLtoW(out fX, out fY);
-        	fX = (fX / Space_Size) * Space_Size;
-	        fY = (fY / Space_Size) * Space_Size;
-            int x1 = i * Program.Space_Size;
-            int y1 = j * Program.Space_Size;
-            int x2 = (i + 1) * Program.Space_Size;
-            int y2 = j * Program.Space_Size;
-            int x3 = i * Program.Space_Size;
-            int y3 = (j + 1) * Program.Space_Size;
-            int x4 = (i + 1) * Program.Space_Size;
-            int y4 = (j + 1) * Program.Space_Size;
+            int fX = 0;
+            int fY = 0;
+            DX.GetMousePoint(out fX, out fY);
+            Drawer.ChangeLtoW(ref fX, ref fY);
+        	fX = (fX / Program.Space_Size);
+	        fY = (fY / Program.Space_Size);
+            int x1 = fX * Program.Space_Size;
+            int y1 = fY * Program.Space_Size;
+            int x2 = (fX + 1) * Program.Space_Size;
+            int y2 = fY * Program.Space_Size;
+            int x3 = fX * Program.Space_Size;
+            int y3 = (fY + 1) * Program.Space_Size;
+            int x4 = (fX + 1) * Program.Space_Size;
+            int y4 = (fY + 1) * Program.Space_Size;
             Drawer.ChangeWtoL(ref x1, ref y1);
             Drawer.ChangeWtoL(ref x2, ref y2);
             Drawer.ChangeWtoL(ref x3, ref y3);
             Drawer.ChangeWtoL(ref x4, ref y4);
-            DX.DrawTriangle(x1, y1,
-                            x2, y2,
-                            x3, y3,
-                            DX.GetColor(LandNutrition[i,j].Red, LandNutrition[i,j].Green, LandNutrition[i,j].Blue), DX.TRUE
-            );
-            DX.DrawTriangle(x2, y2,
-                            x3, y3,
-                            x4, y4,
-                            DX.GetColor(LandNutrition[i,j].Red, LandNutrition[i,j].Green, LandNutrition[i,j].Blue), DX.TRUE
-            );
-
+            DX.DrawLine(x1,y1, x2, y2, DX.GetColor(255, 255, 255));
+            DX.DrawLine(x2,y2, x4, y4, DX.GetColor(255, 255, 255));
+            DX.DrawLine(x4,y4, x3, y3, DX.GetColor(255, 255, 255));
+            DX.DrawLine(x3,y3, x1, y1, DX.GetColor(255, 255, 255));
 
 
 	
@@ -112,9 +107,9 @@ namespace LifeGame
             }
 
             //アイコンのグラフィックの表示
-            foreach(Icon icon in icons.Select((v, i) => ( v, i )))
+            foreach(var icon in icons.Select((v, i) => new{ v, i }))
             {
-                DX.DrawGraph(Program.Window_X - 128 - (Icon.iconSize * (icons.Count() - i)), Program.Window_Y - Icon.iconSize, icon.GraphicHandle, DX.TRUE);
+                DX.DrawGraph(Program.Window_X - 128 - (Icon.IconSize * (icons.Count() - icon.i)), Program.Window_Y - Icon.IconSize, icon.v.GraphicHandle, DX.TRUE);
             }
             DX.DrawExtendGraph(Program.Window_X - 128, Program.Window_Y - 128, Program.Window_X, Program.Window_Y, angelGH, DX.TRUE);
         }

@@ -12,7 +12,7 @@ namespace LifeGame
         public override void Initialize()
         {
             Object = null;
-            TriCorGH = DX.LoadGraph("Data/三角カーソル.png");
+            TriCorGH = DX.LoadGraph("Data/三角カーソル.png");// 画像データ（作って）あるけど（リポジトリ内に）ない
             GraphicHandle = DX.LoadGraph("Data/スキャンアイコン.png");
         }
 
@@ -42,13 +42,16 @@ namespace LifeGame
             {
                 if (Object.Existence == true)
                 {
-                    int LocalX = (int)Object.X;
-                    int LocalY = (int)Object.Y;
-                    Drawer.ChangeWtoL(ref LocalX, ref LocalY);
-                    DX.DrawGraph(LocalX - 8, LocalY - 32, TriCorGH, DX.TRUE);
                     DX.DrawString(Program.Window_X - 128, 16, Object.HP.ToString() + '/' + Object.MaxHP.ToString(), DX.GetColor(255, 255, 255));
                     DX.DrawString(Program.Window_X - 128, 32, Object.Size.ToString(), DX.GetColor(255, 255, 255));
                     DX.DrawString(Program.Window_X - 128, 48, Object.Nutrition.Sum.ToString(), DX.GetColor(255, 255, 255));
+
+                    // ▽カーソルを表示
+                    int x = (int)Object.X;
+                    int y = (int)Object.Y;
+                    Drawer.ChangeWtoL(ref x, ref y);
+                    DX.DrawGraph(x - 8, y - Object.Size / 10 - 10, TriCorGH, DX.TRUE);
+                    DX.DrawCircle(x, y - Object.Size / 10 - 10, 5, DX.GetColor(255,255,255));// 仮　一行↑のカーソル画像が表示出来たら消しておｋ
                 }
                 else
                 {
