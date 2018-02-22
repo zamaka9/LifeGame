@@ -62,11 +62,19 @@ namespace LifeGame
 
         public static bool operator ==(Nutrition n1, Nutrition n2)
         {
+            if(Object.ReferenceEquals(n1, n2))
+            {
+                return true;
+            }
+            if((Object)n1 == null||(Object)n2 == null)
+            {
+                return false;
+            }
             return n1.Red == n2.Red && n1.Blue == n2.Blue && n1.Green == n2.Green;
         }
         public static bool operator !=(Nutrition n1, Nutrition n2)
         {
-            return n1.Red != n2.Red || n1.Blue != n2.Blue || n1.Green != n2.Green;
+            return !(n1 == n2);
         }
 
         public static bool operator <(Nutrition n1, Nutrition n2)

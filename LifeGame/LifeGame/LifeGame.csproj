@@ -66,6 +66,7 @@
     <Compile Include="Gene.cs" />
     <Compile Include="God.cs" />
     <Compile Include="Icon\Icon.cs" />
+    <Compile Include="Icon\IconLandScan.cs" />
     <Compile Include="Icon\IconScan.cs" />
     <Compile Include="Icon\IconThunderbolt.cs" />
     <Compile Include="Land.cs" />

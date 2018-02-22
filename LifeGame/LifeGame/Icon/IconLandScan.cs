@@ -19,10 +19,9 @@ namespace LifeGame
         {
             if (ClickFlag == true)
             {
-                int targetX = clickX;
-                int targetY = clickY;
-                Drawer.ChangeLtoW(ref targetX, ref targetY);
-                TargetLand = Land.GetLandNutrition(targetX, targetY);
+                targetX = clickX;
+                targetY = clickY;
+                targetNutrition = Land.GetLandNutrition(targetX, targetY);
 
                 ClickFlag = false;
             }
@@ -55,16 +54,17 @@ namespace LifeGame
                 DX.DrawLine(x3, y3, x1, y1, DX.GetColor(255, 100, 100));
 
                 // 栄養を表示
-                DX.DrawString(Program.Window_X - 128, 96, Object.Nutrition.Red.ToString(), DX.GetColor(255, 100, 100));
-                DX.DrawString(Program.Window_X - 128, 102, Object.Nutrition.Green.ToString(), DX.GetColor(100, 255, 100));
-                DX.DrawString(Program.Window_X - 128, 118, Object.Nutrition.Blue.ToString(), DX.GetColor(100, 100, 255));
+                DX.DrawString(Program.Window_X - 128, 76, targetX.ToString() + " " + targetY.ToString(), DX.GetColor(255, 255, 255));
+                DX.DrawString(Program.Window_X - 128, 96, targetNutrition.Red.ToString(), DX.GetColor(255, 100, 100));
+                DX.DrawString(Program.Window_X - 128, 112, targetNutrition.Green.ToString(), DX.GetColor(100, 255, 100));
+                DX.DrawString(Program.Window_X - 128, 128, targetNutrition.Blue.ToString(), DX.GetColor(100, 100, 255));
             }
         }
 
         // ターゲット中の土地の栄養
         Nutrition targetNutrition;
         // ターゲット中のワールド座標
-        int targetX;
-        int targetY;
+        int targetX = 0;
+        int targetY = 0;
     }
 }
