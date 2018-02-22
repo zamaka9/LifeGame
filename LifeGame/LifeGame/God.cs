@@ -29,8 +29,8 @@ namespace LifeGame
             angelGH = DX.LoadGraph("Data/テンシ大.png");
 
             //初期選択アイコンを設定
-            LeftClick = icons[0];
-            RightClick = icons[1];
+            leftClick = 0;
+            rightClick = 1;
         }
 
         public void Update()
@@ -45,11 +45,11 @@ namespace LifeGame
                     int n = (int)(Mouse_X - (Program.Window_X - 128 - 64 * icons.Count())) / 64;
                     if (Mouse_Button == DX.MOUSE_INPUT_LEFT)
                     {
-                        LeftClick = icons[n];
+                        leftClick = n;
                     }
                     if (Mouse_Button == DX.MOUSE_INPUT_RIGHT)
                     {
-                        RightClick = icons[n];
+                        rightClick = n;
                     }
                 }
 
@@ -57,11 +57,11 @@ namespace LifeGame
                 Drawer.ChangeLtoW(ref Mouse_X, ref Mouse_Y);
                 if (Mouse_Button == DX.MOUSE_INPUT_LEFT)
                 {
-                    LeftClick.React(Mouse_X, Mouse_Y);
+                    icons[leftClick].React(Mouse_X, Mouse_Y);
                 }
                 if (Mouse_Button == DX.MOUSE_INPUT_RIGHT)
                 {
-                    RightClick.React(Mouse_X, Mouse_Y);
+                    icons[rightClick].React(Mouse_X, Mouse_Y);
                 }
             }
 
@@ -112,6 +112,9 @@ namespace LifeGame
                 DX.DrawGraph(Program.Window_X - 128 - (Icon.IconSize * (icons.Count() - icon.i)), Program.Window_Y - Icon.IconSize, icon.v.GraphicHandle, DX.TRUE);
             }
             DX.DrawExtendGraph(Program.Window_X - 128, Program.Window_Y - 128, Program.Window_X, Program.Window_Y, angelGH, DX.TRUE);
+
+            DX.DrawString(Program.Window_X - 128 - (Icon.IconSize * (icons.Count() - leftClick)), Program.Window_Y - Icon.IconSize, "L", DX.GetColor(255, 255, 255));
+            DX.DrawString(Program.Window_X - 128 - (Icon.IconSize * (icons.Count() - rightClick)), Program.Window_Y - Icon.IconSize, "R", DX.GetColor(255, 255, 255));
         }
 
         enum IconIndexT
@@ -123,8 +126,8 @@ namespace LifeGame
 
         const int iconSize = 64;
 
-        Icon LeftClick;
-        Icon RightClick;
+        int leftClick;
+        int rightClick;
 
         Drawer Drawer;
 

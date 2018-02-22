@@ -96,6 +96,7 @@
     <Content Include="obj\Debug\Data\原初生物B.gif" />
     <Content Include="obj\Debug\Data\図鑑アイコン.png" />
     <Content Include="obj\Debug\Data\図鑑アイコンカラー.png" />
+    <Content Include="obj\Debug\Data\土地スキャンアイコン.png" />
     <Content Include="obj\Debug\Data\地面枠.png" />
     <Content Include="obj\Debug\Data\目アイコン.png" />
     <Content Include="obj\Debug\Data\芽.png" />

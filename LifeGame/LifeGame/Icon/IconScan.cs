@@ -51,7 +51,6 @@ namespace LifeGame
                     int y = (int)Object.Y;
                     Drawer.ChangeWtoL(ref x, ref y);
                     DX.DrawGraph(x - 8, y - Object.Size / 10 - 10, TriCorGH, DX.TRUE);
-                    DX.DrawCircle(x, y - Object.Size / 10 - 10, 5, DX.GetColor(255,255,255));// 仮　一行↑のカーソル画像が表示出来たら消しておｋ
                 }
                 else
                 {

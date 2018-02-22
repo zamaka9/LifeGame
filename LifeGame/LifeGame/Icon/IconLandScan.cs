@@ -12,7 +12,7 @@ namespace LifeGame
         public override void Initialize()
         {
             targetNutrition = null;
-            GraphicHandle = DX.LoadGraph("Data/スキャンアイコン.png");
+            GraphicHandle = DX.LoadGraph("Data/土地スキャンアイコン.png");
         }
 
         public override void Update()
