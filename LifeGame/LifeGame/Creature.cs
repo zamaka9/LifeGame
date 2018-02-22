@@ -69,8 +69,8 @@ namespace LifeGame
                 MaxHP-=10;
                 HP-=10;
                 ActMgr.Update();
-                X += motionX;
-                Y += motionY;
+                X += VelocityX;
+                Y += VelocityY;
                 //何だか生物が変なところ行くので仮の処置
                 if (X < 0)
                 {
@@ -196,8 +196,8 @@ namespace LifeGame
 
         public CreatureMgr mgr;//CreatureMgrを格納する。コンストラクタで登録。staticにするか迷ったけど特に必要性がないので普通で
 
-        public float motionX { get; set; } = 0;
-        public float motionY { get; set; } = 0;//移動速度
+        public float VelocityX { get; set; } = 0;
+        public float VelocityY { get; set; } = 0;//移動速度
     }
 }
 
