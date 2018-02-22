@@ -34,30 +34,30 @@ namespace LifeGame
 
         public static Nutrition operator +(Nutrition n1, Nutrition n2)
         {
-            return new Nutrition(n1.Red + n2.Red, n1.Blue + n2.Blue, n1.Green + n2.Green);
+            return new Nutrition(n1.Red + n2.Red, n1.Green + n2.Green,n1.Blue + n2.Blue);
         }
         public static Nutrition operator +(Nutrition n, int i)
         {
-            return new Nutrition(n.Red + i, n.Blue + i, n.Green + i);
+            return new Nutrition(n.Red + i, n.Green + i,n.Blue + i);
         }
 
         public static Nutrition operator -(Nutrition n1, Nutrition n2)
         {
-            return new Nutrition(n1.Red - n2.Red, n1.Blue - n2.Blue, n1.Green - n2.Green);
+            return new Nutrition(n1.Red - n2.Red, n1.Green - n2.Green,n1.Blue - n2.Blue);
         }
         public static Nutrition operator -(Nutrition n, int i)
         {
-            return new Nutrition(n.Red - i, n.Blue - i, n.Green - i);
+            return new Nutrition(n.Red - i, n.Green - i, n.Blue - i);
         }
 
         public static Nutrition operator *(Nutrition n, int i)
         {
-            return new Nutrition(n.Red * i, n.Blue * i, n.Green * i);
+            return new Nutrition(n.Red * i, n.Green * i, n.Blue * i);
         }
 
         public static Nutrition operator /(Nutrition n, int i)
         {
-            return new Nutrition(n.Red / i, n.Blue / i, n.Green / i);
+            return new Nutrition(n.Red / i, n.Green / i, n.Blue / i);
         }
 
         public static bool operator ==(Nutrition n1, Nutrition n2)
@@ -70,7 +70,7 @@ namespace LifeGame
             {
                 return false;
             }
-            return n1.Red == n2.Red && n1.Blue == n2.Blue && n1.Green == n2.Green;
+            return n1.Red == n2.Red  && n1.Green == n2.Green&& n1.Blue == n2.Blue;
         }
         public static bool operator !=(Nutrition n1, Nutrition n2)
         {
@@ -79,11 +79,11 @@ namespace LifeGame
 
         public static bool operator <(Nutrition n1, Nutrition n2)
         {
-            return n1.Red < n2.Red && n1.Blue < n2.Blue && n1.Green < n2.Green;
+            return n1.Red < n2.Red && n1.Green < n2.Green&& n1.Blue < n2.Blue ;
         }
         public static bool operator <(Nutrition n, int i)
         {
-            return n.Red < i && n.Blue < i && n.Green < i;
+            return n.Red < i && n.Green < i&& n.Blue < i ;
         }
 
         public static bool operator >(Nutrition n1, Nutrition n2) {
@@ -91,7 +91,7 @@ namespace LifeGame
         }
         public static bool operator >(Nutrition n, int i)
         {
-            return n.Red > i && n.Blue > i && n.Green > i;
+            return n.Red > i && n.Green > i&& n.Blue > i ;
         }
 
         //valueの値を栄養の割合にして返す
