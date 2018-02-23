@@ -125,7 +125,7 @@ namespace LifeGame
                 }
             }
         }
-
+        //
         //メソッドとして独立
         public void OnDied()
         {
