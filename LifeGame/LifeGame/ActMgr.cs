@@ -64,19 +64,11 @@ namespace LifeGame
 
         public void Update()
         {
-            bool isTimeToUpdate = ++timer >= timerMax;
-            if (isTimeToUpdate)
-            {
-                timer = 0;
-            }
+            
             foreach (Act act in ActList)
             {
-                
-                if (isTimeToUpdate || act.ShouldBeUpdatedEveryFrame())
-                {
+
                     act.UpdateAndConsumeNut();
-                    
-                }
                 
             }
         }
@@ -116,8 +108,7 @@ namespace LifeGame
         }
 
         List<Act> ActList= new List<Act>();
-        public int timer;//毎フレームUpdateしていると重いし、新しいActの方でも不都合があるので60Fに一度にします
-        public int timerMax = 60;
+
         
         //ゲーム内で登場しうるActをidと一緒に保存
         public static IDictionary<int,Type> ActClassMap = new Dictionary<int,Type>();

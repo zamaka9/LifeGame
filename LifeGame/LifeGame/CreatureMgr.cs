@@ -32,7 +32,7 @@ namespace LifeGame
         {
             foreach (Creature newParent in ParentList)
             {
-                CreatureList.Add(new Creature(this,newParent));
+                CreatureList.Add(new Creature(this, newParent));
             }
             ParentList.Clear();
 
@@ -43,10 +43,23 @@ namespace LifeGame
             }
 
             // Creatureの更新
-            foreach (Creature creature in CreatureList.Where(x => x.Existence == true))
+            bool isTimeToUpdate = ++timer >= timerMax;
+            if (isTimeToUpdate)
             {
-                creature.Update();
+                timer = 0;
+
+                foreach (Creature creature in CreatureList.Where(x => x.Existence == true))
+                {
+                    creature.Update();
+                    
+                }
+                
             }
+            foreach (Creature creature in CreatureList.Where(x => x.Existence == true))
+                {
+                creature.Move();
+                }
+            hasTimerUpdated=false;
 
             // 消去フラグの立った生物は削除
             CreatureList.RemoveAll(x => x.Existence == false);
@@ -79,8 +92,23 @@ namespace LifeGame
 
         public List<Creature> CreatureList = new List<Creature>();
 
-        List<Creature> ParentList= new List<Creature>();//CreateCreature用 親リスト
+        List<Creature> ParentList = new List<Creature>();//CreateCreature用 親リスト
 
         int TimeCount = 0;
+
+        int timer;//CreatureMgrの方で管理します
+        int timerMax = 40;//書き換え非推奨　TimerMaxを使ってください
+        public bool hasTimerUpdated;//直前のフレームにTimerMaxが書き換えられたときにtrue
+
+        public int TimerMax{//何フレームに一度アップデートするかを指定
+            get{
+                return timerMax;
+            }
+            set{
+                timerMax=value;
+                hasTimerUpdated=true;
+            }
+        }
     }
+              
 }

@@ -9,7 +9,7 @@ namespace LifeGame
 {
     class Program
     {
-        public static Random Rand = new Random();
+        public static Random Rand = new Random(0);
 
         public const int Space_Size = 50;//エリア一つ当たりの大きさ
 

@@ -15,62 +15,98 @@ namespace LifeGame
             Creature.drawer = drawer;
         }
 
-        public Creature(CreatureMgr mgr,Creature parent)
+        public Creature(CreatureMgr mgr,Creature parent) : this(mgr, new Gene(parent.Gene), parent.Nutrition.Copy())
         {
-            this.mgr = mgr;
-            Gene = new Gene(parent.Gene);
-
-            Size = Gene.Size;
-            MaxHP = Gene.HP;
-            HP =MaxHP;
-            MaxNutrition = Gene.Nutrition;
-            
-            Nutrition = parent.Nutrition.Copy();
 
             X = parent.X + Program.Rand.Next(-20, 20);
             Y = parent.Y + Program.Rand.Next(-20, 20);
 
-
-
-            ActMgr.Initialize(this, TargetList, Gene.ActList);
-
-            Time = 0;
-
-            Existence = true;
-            Alive = true;
         }
-        public Creature(CreatureMgr mgr)
+        public Creature(CreatureMgr mgr):this(mgr, new Gene())
         {
-            this.mgr = mgr;
-            Gene = new Gene();
-
-            Size = Gene.Size;
-            MaxHP = Gene.HP;
-            HP = Program.Rand.Next(MaxHP);
-            MaxNutrition = Gene.Nutrition;
-            Nutrition = MaxNutrition.Copy();
-
             X = (float)Program.Rand.Next(Program.World_X - 1);
             Y = (float)Program.Rand.Next(Program.World_Y - 1);
 
+        }
 
-            ActMgr.Initialize(this, TargetList, Gene.ActList);
+        public Creature(CreatureMgr mgr, Gene gene):this(mgr,gene,gene.Nutrition)
+        {
+        }
+
+        public Creature(CreatureMgr mgr,Gene gene,Nutrition nutrition)
+        {
+            this.mgr = mgr;
+           
+            Size = gene.Size;
+            MaxHP = gene.HP;
+            HP = Program.Rand.Next(MaxHP);
+            MaxNutrition = gene.Nutrition;
+            Nutrition = nutrition;
+            
+            ActMgr.Initialize(this, TargetList, gene.ActList);
 
             Time = 0;
 
             Existence = true;
             Alive = true;
+
+            VelocityX = 0;
+            VelocityY = 0;
+            LastVelocityMultiplier = 60f/(float)mgr.TimerMax;
+            VelocityXcache = 0;
+            VelocityYcache = 0;
         }
 
         public void Update()
         {
             if (Alive == true)
             {//生存なう
-                MaxHP-=10;
-                HP-=10;
+                MaxHP-=agePerTick;
+                HP-=agePerTick;
                 ActMgr.Update();
-                X += VelocityX;
-                Y += VelocityY;
+               
+                if (HP <= 0)
+                {
+                    Alive = false;
+                    deadTime = Time;
+                    //栄養ばらまく。後々は、まず死体になってそれが分解されていく感じにしたい
+                    OnDied();
+                }
+
+            }
+            else
+            {
+                
+                if (Time - deadTime > 0)
+                {
+                    Existence = false;
+                }
+                
+            }
+
+            Time++;
+        }
+        public void Draw()
+        {
+            if (Alive == true)
+            {
+                drawer.AddDrawList(X, Y, 0, Size / 10, GH[(Time / 10) % 8]);
+            }
+            else
+            {
+                drawer.AddDrawList(X, Y, 0, Size / 10, GH[(deadTime / 10) % 8]);
+            }
+        }
+
+        //velocitycacheにもとづき、座標を更新する。Update頻度に関係なく、毎フレーム呼ばれる
+        public void Move(){
+            if (Alive == true){
+            if(mgr.hasTimerUpdated){
+                LastVelocityMultiplier=60f/(float)mgr.TimerMax;
+            }
+             X += VelocityXcache;
+                Y += VelocityYcache;
+            
                 //何だか生物が変なところ行くので仮の処置
                 if (X < 0)
                 {
@@ -87,35 +123,6 @@ namespace LifeGame
                 {
                     Y -= Program.World_Y;
                 }
-
-                if (HP <= 0)
-                {
-                    Alive = false;
-                    deadTime = Time;
-                    //栄養ばらまく。後々は、まず死体になってそれが分解されていく感じにしたい
-                    OnDied();
-                }
-
-            }
-            else
-            {
-                if (Time - deadTime > 0)
-                {
-                    Existence = false;
-                }
-            }
-
-            Time++;
-        }
-        public void Draw()
-        {
-            if (Alive == true)
-            {
-                drawer.AddDrawList(X, Y, 0, Size / 10, GH[(Time / 10) % 8]);
-            }
-            else
-            {
-                //DrawCircle((int)X, (int)Y, (int)Size / 20, GetColor(50, 50, 50), TRUE);
             }
         }
 
@@ -196,8 +203,54 @@ namespace LifeGame
 
         public CreatureMgr mgr;//CreatureMgrを格納する。コンストラクタで登録。staticにするか迷ったけど特に必要性がないので普通で
 
-        public float VelocityX { get; set; } = 0;
-        public float VelocityY { get; set; } = 0;//移動速度
+        private float velocityX;
+        public float VelocityX
+        {
+            
+            set
+            {
+                VelocityXcache = value * LastVelocityMultiplier;
+                velocityX = value;
+            }
+            get
+            {
+                return this.velocityX;
+            }
+        }
+        private float velocityY;
+        public float VelocityY
+        {
+            
+            set
+            {
+                VelocityYcache = value * LastVelocityMultiplier;
+                velocityY = value;
+            }
+            get
+            {
+                return this.velocityY;
+            }
+        }//移動速度
+
+        float VelocityXcache  = 0;
+        float VelocityYcache = 0;//1ティックごとの移動距離を保存
+        private float lastVelocityMultiplier;
+        public float LastVelocityMultiplier
+        {
+            
+            set
+            {
+                VelocityXcache = value * VelocityX;
+                VelocityYcache = value * VelocityY;
+                lastVelocityMultiplier = value;
+            }
+            get
+            {
+                return this.lastVelocityMultiplier;
+            }
+        }//VelocityXにこの値をかけた数字が実際にX,Yに加算される
+
+        int agePerTick=600;
     }
 }
 
