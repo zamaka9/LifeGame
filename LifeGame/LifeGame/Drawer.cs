@@ -35,17 +35,15 @@ namespace LifeGame
             {
                 if (mouseRightCount == 0)
                 {
-                    DX.GetMousePoint(out oldMouseX, out oldMouseY);
+                    DX.GetMousePoint(out int x, out int y);
+                    oldMouse = new Vector2D(x, y);
                 }
                 else
                 {
-                    int Mouse_X = 0;
-                    int Mouse_Y = 0;
-                    DX.GetMousePoint(out Mouse_X, out Mouse_Y);
-                    cameraX += (oldMouseX - Mouse_X) / zoom;
-                    cameraY += (oldMouseY - Mouse_Y) / zoom;
-                    oldMouseX = Mouse_X;
-                    oldMouseY = Mouse_Y;
+                    DX.GetMousePoint(out int x, out int y);
+                    Vector2D mouse = new Vector2D(x, y);
+                    camera += ((oldMouse - mouse) / zoom);
+                    oldMouse = mouse;
                 }
                 mouseRightCount++;
             }
@@ -57,51 +55,45 @@ namespace LifeGame
             DX.DrawString(Program.Window_X - 96, 0, zoom.ToString(), DX.GetColor(255, 255, 255));
 
             //エリア分割線の描画
-            int temX1, temY1, temX2, temY2;
             for (int i = 0; i <= Program.Space_X; i++)
             {
-                temX1 = i * (Program.World_X / Program.Space_X);
-                temY1 = 0;
-                temX2 = temX1;
-                temY2 = Program.World_Y;
-                ChangeWtoL(ref temX1, ref temY1);
-                ChangeWtoL(ref temX2, ref temY2);
-                DX.DrawLine(temX1, temY1, temX2, temY2, DX.GetColor(100, 100, 100));
+                Vector2D tem1 = new Vector2D(i * (Program.World_X / Program.Space_X), 0);
+                Vector2D tem2 = new Vector2D(tem1.X, Program.World_Y);
+                tem1 = ChangeWtoL(tem1);
+                tem2 = ChangeWtoL(tem2);
+                DX.DrawLine(tem1.iX, tem1.iY, tem2.iX, tem2.iY, DX.GetColor(100, 100, 100));
             }
             for (int i = 0; i <= Program.Space_Y; i++)
             {
-                temX1 = 0;
-                temY1 = i * (Program.World_Y / Program.Space_Y);
-                temX2 = Program.World_X;
-                temY2 = temY1;
-                ChangeWtoL(ref temX1, ref temY1);
-                ChangeWtoL(ref temX2, ref temY2);
-                DX.DrawLine(temX1, temY1, temX2, temY2, DX.GetColor(100, 100, 100));
+                Vector2D tem1 = new Vector2D(0, i * (Program.World_Y / Program.Space_Y));
+                Vector2D tem2 = new Vector2D(Program.World_X, tem1.Y);
+                tem1 = ChangeWtoL(tem1);
+                tem2 = ChangeWtoL(tem2);
+                DX.DrawLine(tem1.iX, tem1.iY, tem2.iX, tem2.iY, DX.GetColor(100, 100, 100));
             }
         }
 
-        public void AddDrawList(float x, float y, int z, int size, int graphicHandle)
+        public void AddDrawList(Vector2D position, int z, int size, int graphicHandle)
         {
-            int Local_X = (int)(zoom * ((x - y) / 1.414f - cameraX) + Program.Window_X / 2);
-            int Local_Y = (int)(zoom * ((x + y) / 1.414f / 2 - cameraY) + Program.Window_Y / 2);
+            Vector2D local = new Vector2D(
+            (int)(zoom * ((position.X - position.Y) / 1.414f - camera.X) + Program.Window_X / 2),
+            (int)(zoom * ((position.X + position.Y) / 1.414f / 2 - camera.Y) + Program.Window_Y / 2));
             int SZ = (int)(size * zoom);
-            DX.DrawExtendGraph(Local_X - SZ, Local_Y - SZ, Local_X + SZ, Local_Y + SZ, graphicHandle, DX.TRUE);
+            DX.DrawExtendGraph(local.iX - SZ, local.iY - SZ, local.iX + SZ, local.iY + SZ, graphicHandle, DX.TRUE);
         }
 
-        public void ChangeLtoW(ref int x, ref int y)
+        public Vector2D ChangeLtoW(Vector2D vector)
         {
-            float a = ((x - Program.Window_X / 2) / zoom + cameraX) * 1.414f;
-            float b = ((y - Program.Window_Y / 2) / zoom + cameraY) * 1.414f * 2;
-            x = (int)(a + b) / 2;
-            y = (int)b - x;
+            float a = ((vector.X - Program.Window_X / 2) / zoom + camera.X) * 1.414f;
+            float b = ((vector.Y - Program.Window_Y / 2) / zoom + camera.Y) * 1.414f * 2;
+            float x = (a + b) / 2;
+            return new Vector2D(x, b - x);
         }
 
-        public void ChangeWtoL(ref int x, ref int y)
+        public Vector2D ChangeWtoL(Vector2D vector)
         {
-            float tem1 = x - y;
-            float tem2 = x + y;
-            x = (int)(zoom * (tem1 / 1.414f - cameraX) + Program.Window_X / 2);
-            y = (int)(zoom * (tem2 / 1.414f / 2 - cameraY) + Program.Window_Y / 2);
+            return new Vector2D((zoom * ((vector.X - vector.Y) / 1.414f - camera.X) + Program.Window_X / 2),
+                                (zoom * ((vector.X + vector.Y) / 1.414f / 2 - camera.Y) + Program.Window_Y / 2));
         }
 
         struct DrawObject
@@ -114,12 +106,10 @@ namespace LifeGame
         }
         List<DrawObject> DrawList;
 
-        float cameraX = 0.0f;
-        float cameraY = Program.Window_Y / 2;
+        Vector2D camera = new Vector2D(0.0f, Program.Window_Y / 2);
         int zoomLevel = 0;
         float zoom = 0.0f;
-        int oldMouseX;
-        int oldMouseY;
+        Vector2D oldMouse = new Vector2D(0, 0);
         int mouseRightCount;
     }
 }

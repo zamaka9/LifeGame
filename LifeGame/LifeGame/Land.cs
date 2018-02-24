@@ -46,58 +46,48 @@ namespace LifeGame
         {
             for(int i = 0; i < Program.Space_X; i++){
                 for(int j = 0; j < Program.Space_Y; j++){
-                    int x1 = i * Program.Space_Size;
-                    int y1 = j * Program.Space_Size;
-                    int x2 = (i + 1) * Program.Space_Size;
-                    int y2 = j * Program.Space_Size;
-                    int x3 = i * Program.Space_Size;
-                    int y3 = (j + 1) * Program.Space_Size;
-                    int x4 = (i + 1) * Program.Space_Size;
-                    int y4 = (j + 1) * Program.Space_Size;
-                    Drawer.ChangeWtoL(ref x1, ref y1);
-                    Drawer.ChangeWtoL(ref x2, ref y2);
-                    Drawer.ChangeWtoL(ref x3, ref y3);
-                    Drawer.ChangeWtoL(ref x4, ref y4);
-                     DX.DrawTriangle(x1, y1,
-                                    x2, y2,
-                                    x3, y3,
-                                    DX.GetColor(LandNutrition[i,j].Red>>nbit, LandNutrition[i,j].Green >> nbit, LandNutrition[i,j].Blue >> nbit), DX.TRUE
-                    );
-                    DX.DrawTriangle(x2, y2,
-                                    x3, y3,
-                                    x4, y4,
-                                    DX.GetColor(LandNutrition[i,j].Red >> nbit, LandNutrition[i,j].Green>> nbit, LandNutrition[i,j].Blue >> nbit), DX.TRUE
-);
+                    Vector2D vec1 = new Vector2D(i, j) * Program.Space_Size;
+                    Vector2D vec2 = new Vector2D(i + 1, j) * Program.Space_Size;
+                    Vector2D vec3 = new Vector2D(i, j + 1) * Program.Space_Size;
+                    Vector2D vec4 = new Vector2D(i + 1, j + 1) * Program.Space_Size;
+                    vec1 = Drawer.ChangeWtoL(vec1);
+                    vec2 = Drawer.ChangeWtoL(vec2);
+                    vec3 = Drawer.ChangeWtoL(vec3);
+                    vec4 = Drawer.ChangeWtoL(vec4);
+                    DX.DrawTriangle(vec1.iX, vec1.iY, vec2.iX, vec2.iY, vec3.iX, vec3.iY,
+                                    DX.GetColor(LandNutrition[i,j].Red >> nbit, LandNutrition[i,j].Green >> nbit, LandNutrition[i,j].Blue >> nbit), DX.TRUE);
+                    DX.DrawTriangle(vec2.iX, vec2.iY, vec3.iX, vec3.iY, vec4.iX, vec4.iY,
+                                    DX.GetColor(LandNutrition[i,j].Red >> nbit, LandNutrition[i,j].Green>> nbit, LandNutrition[i,j].Blue >> nbit), DX.TRUE);
                 }
             }
         }
 
-        public void AddCList(float x, float y, Creature pointer)
+        public void AddCList(Vector2D position, Creature pointer)
         {
-            int X = ReturnX(x);
-            int Y = ReturnY(y);
+            int X = ReturnX(position.X);
+            int Y = ReturnY(position.Y);
             Space[X,Y].Add(pointer);
             pointer.TargetList = (Space[X,Y]);
         }
 
-	    public List<Creature> GetCList(float x, float y)
+	    public List<Creature> GetCList(Vector2D position)
         {
-            int X = ReturnX(x);
-            int Y = ReturnY(y);
+            int X = ReturnX(position.X);
+            int Y = ReturnY(position.Y);
             return Space[X,Y];
         }
 
-    	public Nutrition GetLandNutrition(float x, float y)
+    	public Nutrition GetLandNutrition(Vector2D position)
         {
-            int X = ReturnX(x);
-            int Y = ReturnY(y);
+            int X = ReturnX(position.X);
+            int Y = ReturnY(position.Y);
             return LandNutrition[X,Y];
         }
 
-    	public void SetLandNutrition(float x, float y, Nutrition Nut)
+    	public void SetLandNutrition(Vector2D position, Nutrition Nut)
         {
-            int X = ReturnX(x);
-            int Y = ReturnY(y);
+            int X = ReturnX(position.X);
+            int Y = ReturnY(position.Y);
             LandNutrition[X,Y] = Nut;
         }
 

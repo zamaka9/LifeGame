@@ -17,9 +17,9 @@ namespace LifeGame.Acts
         }
         public override bool Update()
         {
-            Nutrition landnut = Land.GetLandNutrition(owner.X, owner.Y);
+            Nutrition landnut = Land.GetLandNutrition(owner.Position);
             Nutrition predation = landnut.Percent(requirement);
-            Land.SetLandNutrition(owner.X, owner.Y, landnut - predation);
+            Land.SetLandNutrition(owner.Position, landnut - predation);
             owner.Nutrition += predation;
             return true;
         }

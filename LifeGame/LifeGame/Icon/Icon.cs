@@ -14,10 +14,9 @@ namespace LifeGame
 
         public abstract void Draw();
 
-        public void React(int x, int y)
+        public void React(Vector2D vector)
         {
-            clickX = x;
-            clickY = y;
+            clickPosition = vector;
             ClickFlag = true;
         }
 
@@ -25,8 +24,7 @@ namespace LifeGame
         public static Land Land { get; set; }
         public static Drawer Drawer { get; set; }
         public int GraphicHandle { get; protected set; }
-        protected int clickX;
-        protected int clickY;
+        protected Vector2D clickPosition;
         protected bool ClickFlag;
     }
 }

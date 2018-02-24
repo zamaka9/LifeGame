@@ -20,15 +20,14 @@ namespace LifeGame
         {
             if (ClickFlag == true)
             {
-                int temDistance = 10000;//同エリア内でのカーソルと生物との暫定最短距離
-                List<Creature> CList = Land.GetCList(clickX, clickY);
+                float temDistance = 10000;//同エリア内でのカーソルと生物との暫定最短距離
+                List<Creature> CList = Land.GetCList(clickPosition);
                 foreach(Creature creature in CList)
                 {
-                    int X = clickX - (int)creature.X;
-                    int Y = clickY - (int)creature.Y;
-                    if (temDistance > X * X + Y * Y)
+                    Vector2D creaturePos = clickPosition - creature.Position; 
+                    if (temDistance > creaturePos.SquareLength)
                     {
-                        temDistance = X * X + Y * Y;
+                        temDistance = creaturePos.SquareLength;
                         Object = creature;
                     }
                 }
@@ -47,10 +46,8 @@ namespace LifeGame
                     DX.DrawString(Program.Window_X - 128, 48, Object.Nutrition.Sum.ToString(), DX.GetColor(255, 255, 255));
 
                     // ▽カーソルを表示
-                    int x = (int)Object.X;
-                    int y = (int)Object.Y;
-                    Drawer.ChangeWtoL(ref x, ref y);
-                    DX.DrawGraph(x - 8, y - Object.Size / 10 - 10, TriCorGH, DX.TRUE);
+                    Vector2D position = Drawer.ChangeWtoL(Object.Position);
+                    DX.DrawGraph(position.iX - 8, position.iY - Object.Size / 10 - 10, TriCorGH, DX.TRUE);
                 }
                 else
                 {

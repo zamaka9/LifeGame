@@ -27,8 +27,7 @@ namespace LifeGame
             
             Nutrition = parent.Nutrition.Copy();
 
-            X = parent.X + Program.Rand.Next(-20, 20);
-            Y = parent.Y + Program.Rand.Next(-20, 20);
+            Position = parent.Position + new Vector2D(Program.Rand.Next(-20, 20), Program.Rand.Next(-20, 20));
 
 
 
@@ -50,8 +49,8 @@ namespace LifeGame
             MaxNutrition = Gene.Nutrition;
             Nutrition = MaxNutrition.Copy();
 
-            X = (float)Program.Rand.Next(Program.World_X - 1);
-            Y = (float)Program.Rand.Next(Program.World_Y - 1);
+            Position.X = Program.Rand.Next(Program.World_X - 1);
+            Position.Y = Program.Rand.Next(Program.World_Y - 1);
 
 
             ActMgr.Initialize(this, TargetList, Gene.ActList);
@@ -69,23 +68,22 @@ namespace LifeGame
                 MaxHP-=10;
                 HP-=10;
                 ActMgr.Update();
-                X += VelocityX;
-                Y += VelocityY;
+                Position += Velocity;
                 //何だか生物が変なところ行くので仮の処置
-                if (X < 0)
+                if (Position.X < 0)
                 {
-                    X+= Program.World_X;
-                }else if(X> Program.World_X)
+                    Position.X += Program.World_X;
+                }else if(Position.X > Program.World_X)
                 {
-                    X -= Program.World_X;
+                    Position.X -= Program.World_X;
                 }
-                if (Y < 0)
+                if (Position.Y < 0)
                 {
-                    Y += Program.World_Y;
+                    Position.Y += Program.World_Y;
                 }
-                else if (Y > Program.World_Y)
+                else if (Position.Y > Program.World_Y)
                 {
-                    Y -= Program.World_Y;
+                    Position.Y -= Program.World_Y;
                 }
 
                 if (HP <= 0)
@@ -111,7 +109,7 @@ namespace LifeGame
         {
             if (Alive == true)
             {
-                drawer.AddDrawList(X, Y, 0, Size / 10, GH[(Time / 10) % 8]);
+                drawer.AddDrawList(Position, 0, Size / 10, GH[(Time / 10) % 8]);
             }
             else
             {
@@ -135,19 +133,14 @@ namespace LifeGame
             {
                 for (int y = -1; y <= 1; y++)
                 {
-                    
+
                     //Console.WriteLine(X + x*50 + "," + Y + y * 50);
-                    land.SetLandNutrition(X + x * 50, Y + y * 50, land.GetLandNutrition(X + x * 50, Y + y * 50) + Nutrition.Divide(9,i));
+                    Vector2D landPosition = Position + new Vector2D(x * 50, y * 50);
+                    land.SetLandNutrition(landPosition, land.GetLandNutrition(landPosition) + Nutrition.Divide(9,i));
                     i++;
                 }
             }
            
-        }
-
-        //引数で与えられた生物との距離の2乗を返す。GetNearestCreatureで使うための存在
-        public double DistanceSquareFrom(Creature c)
-        {
-            return (this.X - c.X) * (this.X - c.X) + (this.Y - c.Y) * (this.Y - c.Y);
         }
 
         //最寄りの生物を取得。あまりきれいな形じゃないので後々Actあたりを使って綺麗にしたい
@@ -158,7 +151,7 @@ namespace LifeGame
             foreach(Creature c in this.mgr.CreatureList)
             {
                 if (c == this) continue;
-                double d = c.DistanceSquareFrom(this);
+                double d = (c.Position - this.Position).SquareLength;
                 if ( d < distance) {
                     nearest = c;
                     distance = d;
@@ -183,8 +176,7 @@ namespace LifeGame
         public int HP { get; set; } = 0;//現在体力
         public Nutrition Nutrition { get; set; } = new Nutrition();//現在栄養
         // 座標
-        public float X { get; set; } = 0;
-        public float Y { get; set; } = 0;
+        public Vector2D Position { get; set; } = new Vector2D();
         public int Time { get; private set; } = 0;//時間
         int deadTime = 0;//死亡時刻
 
@@ -195,9 +187,8 @@ namespace LifeGame
         public List<Creature> TargetList { get; set; } = new List<Creature>();//同エリア内のCreatureを持つリストを指すポインタ
 
         public CreatureMgr mgr;//CreatureMgrを格納する。コンストラクタで登録。staticにするか迷ったけど特に必要性がないので普通で
-
-        public float VelocityX { get; set; } = 0;
-        public float VelocityY { get; set; } = 0;//移動速度
+        
+        public Vector2D Velocity { get; set; } = new Vector2D();//移動速度
     }
 }
 

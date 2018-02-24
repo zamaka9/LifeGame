@@ -45,8 +45,7 @@ namespace LifeGame.Acts
                 Direction = (float)((Program.Rand.Next(359) / 180.0f) * Math.PI);
                 Speed = MaxSpeed * SpeedLevel / 10;
                 //速度はCreatureの方で持つようにしました
-                owner.VelocityX = (float)Math.Cos(Direction) * Speed;
-                owner.VelocityY = (float)Math.Sin(Direction) * Speed;
+                owner.Velocity = new Vector2D((float)Math.Cos(Direction), (float)Math.Sin(Direction)) * Speed;
                 return true;
             }
             return false;
