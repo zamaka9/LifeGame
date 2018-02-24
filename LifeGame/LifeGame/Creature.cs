@@ -25,14 +25,12 @@ namespace LifeGame
             
             Nutrition = parent.Nutrition.Copy();
 
-            X = parent.X + Program.Rand.Next(-20, 20);
-            Y = parent.Y + Program.Rand.Next(-20, 20);
+            Position = parent.Position + new Vector2D(Program.Rand.Next(-20, 20), Program.Rand.Next(-20, 20));
 
         }
         public Creature(CreatureMgr mgr):this(mgr, new Gene())
         {
-            X = (float)Program.Rand.Next(Program.World_X - 1);
-            Y = (float)Program.Rand.Next(Program.World_Y - 1);
+            Position=new Vector2D(Program.Rand.Next(Program.World_X-1), Program.Rand.Next(Program.World_Y - 1));
 
         }
 
@@ -57,11 +55,9 @@ namespace LifeGame
             Existence = true;
             Alive = true;
 
-            VelocityX = 0;
-            VelocityY = 0;
+            Velocity=new Vector2D();
             LastVelocityMultiplier = 60f/(float)mgr.TimerMax;
-            VelocityXcache = 0;
-            VelocityYcache = 0;
+            Velocitycache = new Vector2D();
         }
 
         public void Update()
@@ -71,25 +67,7 @@ namespace LifeGame
                 MaxHP-=agePerTick;
                 HP-=agePerTick;
                 ActMgr.Update();
-                X += VelocityX;
-                Y += VelocityY;
-                //何だか生物が変なところ行くので仮の処置
-                if (X < 0)
-                {
-                    X+= Program.World_X;
-                }else if(X> Program.World_X)
-                {
-                    X -= Program.World_X;
-                }
-                if (Y < 0)
-                {
-                    Y += Program.World_Y;
-                }
-                else if (Y > Program.World_Y)
-                {
-                    Y -= Program.World_Y;
-                }
-
+                
                 if (HP <= 0)
                 {
                     Alive = false;
@@ -115,11 +93,11 @@ namespace LifeGame
         {
             if (Alive == true)
             {
-                drawer.AddDrawList(X, Y, 0, Size / 10, GH[(animTime / speed) % 8]);
+                drawer.AddDrawList(Position, 0, Size / 10, GH[(animTime / speed) % 8]);
             }
             else
             {
-                drawer.AddDrawList(X, Y, 0, Size / 10, GH[(deadAnimTime / speed) % 8]);
+                drawer.AddDrawList(Position, 0, Size / 10, GH[(deadAnimTime / speed) % 8]);
             }
         }
 
@@ -129,24 +107,23 @@ namespace LifeGame
             if(mgr.hasTimerUpdated){
                 LastVelocityMultiplier=60f/(float)mgr.TimerMax;
             }
-             X += VelocityXcache;
-                Y += VelocityYcache;
+                Position += Velocitycache;
             
                 //何だか生物が変なところ行くので仮の処置
-                if (X < 0)
+                if (Position.X < 0)
                 {
-                    X+= Program.World_X;
-                }else if(X> Program.World_X)
+                    Position.X += Program.World_X;
+                }else if(Position.X > Program.World_X)
                 {
-                    X -= Program.World_X;
+                    Position.X -= Program.World_X;
                 }
-                if (Y < 0)
+                if (Position.Y < 0)
                 {
-                    Y += Program.World_Y;
+                    Position.Y += Program.World_Y;
                 }
-                else if (Y > Program.World_Y)
+                else if (Position.Y > Program.World_Y)
                 {
-                    Y -= Program.World_Y;
+                    Position.Y -= Program.World_Y;
                 }
             }
         }
@@ -174,16 +151,10 @@ namespace LifeGame
                     land.SetLandNutrition(landPosition, land.GetLandNutrition(landPosition) + Nutrition.Divide(9,i));
                     i++;
                 }
-            }
+            }*/
            
         }
-
-        //引数で与えられた生物との距離の2乗を返す。GetNearestCreatureで使うための存在
-        public double DistanceSquareFrom(Creature c)
-        {
-            return (this.X - c.X) * (this.X - c.X) + (this.Y - c.Y) * (this.Y - c.Y);
-        }
-
+        
         //最寄りの生物を取得。あまりきれいな形じゃないので後々Actあたりを使って綺麗にしたい
         public Creature GetNearestCreature()
         {
@@ -229,45 +200,30 @@ namespace LifeGame
 
         public CreatureMgr mgr;//CreatureMgrを格納する。コンストラクタで登録。staticにするか迷ったけど特に必要性がないので普通で
 
-        private float velocityX;
-        public float VelocityX
+        private Vector2D velocity;
+        public Vector2D Velocity
         {
             
             set
             {
-                VelocityXcache = value * LastVelocityMultiplier;
-                velocityX = value;
+                Velocitycache = value * LastVelocityMultiplier;
+                velocity = value;
             }
             get
             {
-                return this.velocityX;
+                return this.velocity;
             }
         }
-        private float velocityY;
-        public float VelocityY
-        {
-            
-            set
-            {
-                VelocityYcache = value * LastVelocityMultiplier;
-                velocityY = value;
-            }
-            get
-            {
-                return this.velocityY;
-            }
-        }//移動速度
+       //移動速度
 
-        float VelocityXcache  = 0;
-        float VelocityYcache = 0;//1ティックごとの移動距離を保存
+        Vector2D Velocitycache ;//1ティックごとの移動距離を保存
         private float lastVelocityMultiplier;
         public float LastVelocityMultiplier
         {
             
             set
             {
-                VelocityXcache = value * VelocityX;
-                VelocityYcache = value * VelocityY;
+                Velocitycache = Velocity*value;
                 lastVelocityMultiplier = value;
             }
             get

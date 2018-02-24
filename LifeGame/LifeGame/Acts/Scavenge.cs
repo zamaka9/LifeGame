@@ -40,8 +40,8 @@ namespace LifeGame.Acts
                                 {
 
                                     //Console.WriteLine(X + x*50 + "," + Y + y * 50);
-                                    land.SetLandNutrition(owner.X + x * Program.Space_X, owner.Y + y * Program.Space_Y,
-                                        land.GetLandNutrition(owner.X + x * Program.Space_X, owner.Y + y * Program.Space_Y) + nut);
+                                    Vector2D vec = new Vector2D(x * Program.Space_X, y * Program.Space_Y)+owner.Position;
+                                    land.SetLandNutrition(vec,land.GetLandNutrition(vec) + nut);
                                     i++;
                                 }
                             }
