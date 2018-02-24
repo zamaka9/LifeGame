@@ -21,7 +21,7 @@ namespace LifeGame
             if (ClickFlag == true)
             {
                 Thunderbolt_X = 0;
-                List<Creature> CList = Land.GetCList(clickX, clickY);
+                List<Creature> CList = Land.GetCList(clickPosition);
                 foreach (Creature creature in CList)
                 {
                     creature.HP = 0;

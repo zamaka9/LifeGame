@@ -39,7 +39,7 @@ namespace LifeGame
             // 当たり判定用にどこにいるかを登録
             foreach (Creature creature in CreatureList.Where(x => x.Existence == true))
             {
-                Land.AddCList(creature.X, creature.Y, creature);
+                Land.AddCList(creature.Position, creature);
             }
 
             // Creatureの更新

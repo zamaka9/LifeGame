@@ -19,9 +19,8 @@ namespace LifeGame
         {
             if (ClickFlag == true)
             {
-                targetX = clickX;
-                targetY = clickY;
-                targetNutrition = Land.GetLandNutrition(targetX, targetY);
+                targetPos = clickPosition;
+                targetNutrition = Land.GetLandNutrition(targetPos);
 
                 ClickFlag = false;
             }
@@ -32,29 +31,23 @@ namespace LifeGame
             if (targetNutrition != null)
             {
                 // 選択中のタイルを赤枠で表示(仮)
-                int fX = targetX;
-                int fY = targetY;
-                fX = (fX / Program.Space_Size);
-                fY = (fY / Program.Space_Size);
-                int x1 = fX * Program.Space_Size;
-                int y1 = fY * Program.Space_Size;
-                int x2 = (fX + 1) * Program.Space_Size;
-                int y2 = fY * Program.Space_Size;
-                int x3 = fX * Program.Space_Size;
-                int y3 = (fY + 1) * Program.Space_Size;
-                int x4 = (fX + 1) * Program.Space_Size;
-                int y4 = (fY + 1) * Program.Space_Size;
-                Drawer.ChangeWtoL(ref x1, ref y1);
-                Drawer.ChangeWtoL(ref x2, ref y2);
-                Drawer.ChangeWtoL(ref x3, ref y3);
-                Drawer.ChangeWtoL(ref x4, ref y4);
-                DX.DrawLine(x1, y1, x2, y2, DX.GetColor(255, 100, 100));
-                DX.DrawLine(x2, y2, x4, y4, DX.GetColor(255, 100, 100));
-                DX.DrawLine(x4, y4, x3, y3, DX.GetColor(255, 100, 100));
-                DX.DrawLine(x3, y3, x1, y1, DX.GetColor(255, 100, 100));
+                Vector2D f = (Vector2D)targetPos.Clone();
+                f /= Program.Space_Size;
+                Vector2D vec1 = new Vector2D(f.iX, f.iY) * Program.Space_Size;
+                Vector2D vec2 = new Vector2D(f.iX + 1, f.iY) * Program.Space_Size;
+                Vector2D vec3 = new Vector2D(f.iX, f.iY + 1) * Program.Space_Size;
+                Vector2D vec4 = new Vector2D(f.iX + 1, f.iY + 1) * Program.Space_Size;
+                vec1 = Drawer.ChangeWtoL(vec1);
+                vec2 = Drawer.ChangeWtoL(vec2);
+                vec3 = Drawer.ChangeWtoL(vec3);
+                vec4 = Drawer.ChangeWtoL(vec4);
+                DX.DrawLine(vec1.iX, vec1.iY, vec2.iX, vec2.iY, DX.GetColor(255, 100, 100));
+                DX.DrawLine(vec2.iX, vec2.iY, vec4.iX, vec4.iY, DX.GetColor(255, 100, 100));
+                DX.DrawLine(vec4.iX, vec4.iY, vec3.iX, vec3.iY, DX.GetColor(255, 100, 100));
+                DX.DrawLine(vec3.iX, vec3.iY, vec1.iX, vec1.iY, DX.GetColor(255, 100, 100));
 
                 // 栄養を表示
-                DX.DrawString(Program.Window_X - 128, 76, targetX.ToString() + " " + targetY.ToString(), DX.GetColor(255, 255, 255));
+                DX.DrawString(Program.Window_X - 128, 76, targetPos.X.ToString() + " " + targetPos.Y.ToString(), DX.GetColor(255, 255, 255));
                 DX.DrawString(Program.Window_X - 128, 96, targetNutrition.Red.ToString(), DX.GetColor(255, 100, 100));
                 DX.DrawString(Program.Window_X - 128, 112, targetNutrition.Green.ToString(), DX.GetColor(100, 255, 100));
                 DX.DrawString(Program.Window_X - 128, 128, targetNutrition.Blue.ToString(), DX.GetColor(100, 100, 255));
@@ -64,7 +57,6 @@ namespace LifeGame
         // ターゲット中の土地の栄養
         Nutrition targetNutrition;
         // ターゲット中のワールド座標
-        int targetX = 0;
-        int targetY = 0;
+        Vector2D targetPos;
     }
 }

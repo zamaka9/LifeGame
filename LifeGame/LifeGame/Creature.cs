@@ -18,6 +18,13 @@ namespace LifeGame
         public Creature(CreatureMgr mgr,Creature parent) : this(mgr, new Gene(parent.Gene), parent.Nutrition.Copy())
         {
 
+            Size = Gene.Size;
+            MaxHP = Gene.HP;
+            HP =MaxHP;
+            MaxNutrition = Gene.Nutrition;
+            
+            Nutrition = parent.Nutrition.Copy();
+
             X = parent.X + Program.Rand.Next(-20, 20);
             Y = parent.Y + Program.Rand.Next(-20, 20);
 
@@ -64,7 +71,25 @@ namespace LifeGame
                 MaxHP-=agePerTick;
                 HP-=agePerTick;
                 ActMgr.Update();
-               
+                X += VelocityX;
+                Y += VelocityY;
+                //何だか生物が変なところ行くので仮の処置
+                if (X < 0)
+                {
+                    X+= Program.World_X;
+                }else if(X> Program.World_X)
+                {
+                    X -= Program.World_X;
+                }
+                if (Y < 0)
+                {
+                    Y += Program.World_Y;
+                }
+                else if (Y > Program.World_Y)
+                {
+                    Y -= Program.World_Y;
+                }
+
                 if (HP <= 0)
                 {
                     Alive = false;
@@ -143,13 +168,14 @@ namespace LifeGame
             {
                 for (int y = -1; y <= 1; y++)
                 {
-                    
+
                     //Console.WriteLine(X + x*50 + "," + Y + y * 50);
-                    land.SetLandNutrition(X + x * 50, Y + y * 50, land.GetLandNutrition(X + x * 50, Y + y * 50) + Nutrition.Divide(9,i));
+                    Vector2D landPosition = Position + new Vector2D(x * 50, y * 50);
+                    land.SetLandNutrition(landPosition, land.GetLandNutrition(landPosition) + Nutrition.Divide(9,i));
                     i++;
                 }
             }
-           */
+           
         }
 
         //引数で与えられた生物との距離の2乗を返す。GetNearestCreatureで使うための存在
@@ -166,7 +192,7 @@ namespace LifeGame
             foreach(Creature c in this.mgr.CreatureList)
             {
                 if (c == this) continue;
-                double d = c.DistanceSquareFrom(this);
+                double d = (c.Position - this.Position).SquareLength;
                 if ( d < distance) {
                     nearest = c;
                     distance = d;
@@ -191,8 +217,7 @@ namespace LifeGame
         public int HP { get; set; } = 0;//現在体力
         public Nutrition Nutrition { get; set; } = new Nutrition();//現在栄養
         // 座標
-        public float X { get; set; } = 0;
-        public float Y { get; set; } = 0;
+        public Vector2D Position { get; set; } = new Vector2D();
         public int Time { get; private set; } = 0;//時間
         int deadTime = 0;//死亡時刻
 

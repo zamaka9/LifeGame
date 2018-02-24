@@ -16,7 +16,7 @@ namespace LifeGame.Acts
         }
         public override bool Update()
         {
-            Nutrition landnut = Land.GetLandNutrition(owner.X, owner.Y);
+            Nutrition landnut = Land.GetLandNutrition(owner.Position);
             //呼び出されるたび、合計で15の栄養を吸収
             int nutToGet = 100000;
             Nutrition predation = landnut.PercentNonNegative(nutToGet);

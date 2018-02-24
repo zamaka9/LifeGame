@@ -35,14 +35,17 @@ namespace LifeGame
 
         public void Update()
         {
+            int mouseX;
+            int mouseY;
             //マウスのいずれかのクリックがされたら
-            if (DX.GetMouseInputLog(out Mouse_Button, out Mouse_X, out Mouse_Y, DX.TRUE) == 0)
+            if (DX.GetMouseInputLog(out Mouse_Button, out mouseX, out mouseY, DX.TRUE) == 0)
             {
+                mouse = new Vector2D(mouseX, mouseY);
                 //アイコンの変更の判定
-                if (Mouse_Y >= Program.Window_Y - 64 && Mouse_Y < Program.Window_Y&&
-                    Mouse_X >= Program.Window_X - 128 - 64 * icons.Count()&&Mouse_X <= Program.Window_X - 128)
+                if (mouse.iY >= Program.Window_Y - 64 && mouse.iY < Program.Window_Y&&
+                    mouse.iX >= Program.Window_X - 128 - 64 * icons.Count()&&mouse.iX <= Program.Window_X - 128)
                 {
-                    int n = (int)(Mouse_X - (Program.Window_X - 128 - 64 * icons.Count())) / 64;
+                    int n = (mouse.iX - (Program.Window_X - 128 - 64 * icons.Count())) / 64;
                     if (Mouse_Button == DX.MOUSE_INPUT_LEFT)
                     {
                         leftClick = n;
@@ -54,14 +57,14 @@ namespace LifeGame
                 }
 
                 //各ボタン対応アイコンクラスに座標とクリックされたという情報をセット
-                Drawer.ChangeLtoW(ref Mouse_X, ref Mouse_Y);
+                mouse = Drawer.ChangeLtoW(mouse);
                 if (Mouse_Button == DX.MOUSE_INPUT_LEFT)
                 {
-                    icons[leftClick].React(Mouse_X, Mouse_Y);
+                    icons[leftClick].React(mouse);
                 }
                 if (Mouse_Button == DX.MOUSE_INPUT_RIGHT)
                 {
-                    icons[rightClick].React(Mouse_X, Mouse_Y);
+                    icons[rightClick].React(mouse);
                 }
             }
 
@@ -75,28 +78,22 @@ namespace LifeGame
         public void Draw()
         {
             // 選択中のタイルを色付きで表示(仮)
-            int fX = 0;
-            int fY = 0;
-            DX.GetMousePoint(out fX, out fY);
-            Drawer.ChangeLtoW(ref fX, ref fY);
-        	fX = (fX / Program.Space_Size);
-	        fY = (fY / Program.Space_Size);
-            int x1 = fX * Program.Space_Size;
-            int y1 = fY * Program.Space_Size;
-            int x2 = (fX + 1) * Program.Space_Size;
-            int y2 = fY * Program.Space_Size;
-            int x3 = fX * Program.Space_Size;
-            int y3 = (fY + 1) * Program.Space_Size;
-            int x4 = (fX + 1) * Program.Space_Size;
-            int y4 = (fY + 1) * Program.Space_Size;
-            Drawer.ChangeWtoL(ref x1, ref y1);
-            Drawer.ChangeWtoL(ref x2, ref y2);
-            Drawer.ChangeWtoL(ref x3, ref y3);
-            Drawer.ChangeWtoL(ref x4, ref y4);
-            DX.DrawLine(x1,y1, x2, y2, DX.GetColor(255, 255, 255));
-            DX.DrawLine(x2,y2, x4, y4, DX.GetColor(255, 255, 255));
-            DX.DrawLine(x4,y4, x3, y3, DX.GetColor(255, 255, 255));
-            DX.DrawLine(x3,y3, x1, y1, DX.GetColor(255, 255, 255));
+            DX.GetMousePoint(out int fX, out int fY);
+            Vector2D f = new Vector2D(fX, fY);
+            f = Drawer.ChangeLtoW(f);
+            f /= Program.Space_Size;
+            Vector2D vec1 = new Vector2D(f.iX, f.iY) * Program.Space_Size;
+            Vector2D vec2 = new Vector2D(f.iX + 1, f.iY) * Program.Space_Size;
+            Vector2D vec3 = new Vector2D(f.iX, f.iY + 1) * Program.Space_Size;
+            Vector2D vec4 = new Vector2D(f.iX + 1, f.iY + 1) * Program.Space_Size;
+            vec1 = Drawer.ChangeWtoL(vec1);
+            vec2 = Drawer.ChangeWtoL(vec2);
+            vec3 = Drawer.ChangeWtoL(vec3);
+            vec4 = Drawer.ChangeWtoL(vec4);
+            DX.DrawLine(vec1.iX, vec1.iY, vec2.iX, vec2.iY, DX.GetColor(255, 255, 255));
+            DX.DrawLine(vec2.iX, vec2.iY, vec4.iX, vec4.iY, DX.GetColor(255, 255, 255));
+            DX.DrawLine(vec4.iX, vec4.iY, vec3.iX, vec3.iY, DX.GetColor(255, 255, 255));
+            DX.DrawLine(vec3.iX, vec3.iY, vec1.iX, vec1.iY, DX.GetColor(255, 255, 255));
 
 
 	
@@ -131,8 +128,7 @@ namespace LifeGame
 
         Drawer Drawer;
 
-        int Mouse_X;
-        int Mouse_Y;
+        Vector2D mouse = new Vector2D();
         int Mouse_Button;
 
         Icon[] icons;  
