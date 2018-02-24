@@ -75,7 +75,7 @@ namespace LifeGame
             DX.SetDrawBright(255, 255, 255);
 
             //生物数を表示
-            DX.DrawString(4, Program.Window_Y - 20, CreatureList.Count.ToString(), DX.GetColor(255, 255, 255));
+            DX.DrawString(4, Program.Window_Y - 20, (CreatureList.Where(x => x.Alive == true)).Count().ToString()+"/"+CreatureList.Count.ToString(), DX.GetColor(255, 255, 255));
 
             DX.DrawString(0, 0, (TimeCount / 3600 + 1).ToString() + "年目", DX.GetColor(255, 255, 255));
         }

@@ -232,7 +232,7 @@ namespace LifeGame
             }
         }//VelocityXにこの値をかけた数字が実際にX,Yに加算される
 
-        int agePerTick=200;
+        int agePerTick=50;
         int deadAnimTime;
     }
 }
