@@ -43,23 +43,22 @@ namespace LifeGame
             }
 
             // Creatureの更新
-            bool isTimeToUpdate = ++timer >= timerMax;
+            bool isTimeToUpdate = (++timer % timerMax) == 0;
             if (isTimeToUpdate)
             {
-                timer = 0;
 
                 foreach (Creature creature in CreatureList.Where(x => x.Existence == true))
                 {
                     creature.Update();
-                    
+
                 }
-                
+
             }
             foreach (Creature creature in CreatureList.Where(x => x.Existence == true))
-                {
+            {
                 creature.Move();
-                }
-            hasTimerUpdated=false;
+            }
+            hasTimerUpdated = false;
 
             // 消去フラグの立った生物は削除
             CreatureList.RemoveAll(x => x.Existence == false);
@@ -71,7 +70,7 @@ namespace LifeGame
         {
             foreach (Creature creature in CreatureList.Where(x => x.Existence == true))
             {
-                creature.Draw();
+                creature.Draw(timer,1+TimerMax/4);
             }
             DX.SetDrawBright(255, 255, 255);
 
@@ -100,15 +99,19 @@ namespace LifeGame
         int timerMax = 40;//書き換え非推奨　TimerMaxを使ってください
         public bool hasTimerUpdated;//直前のフレームにTimerMaxが書き換えられたときにtrue
 
-        public int TimerMax{//何フレームに一度アップデートするかを指定
-            get{
+        public int TimerMax
+        {//何フレームに一度アップデートするかを指定
+            get
+            {
                 return timerMax;
             }
-            set{
-                timerMax=value;
-                hasTimerUpdated=true;
+            set
+            {
+                timerMax = value;
+                hasTimerUpdated = true;
             }
         }
+
     }
-              
+
 }

@@ -55,6 +55,11 @@ namespace LifeGame
             return new Nutrition(n.Red * i, n.Green * i, n.Blue * i);
         }
 
+        public static Nutrition operator *(Nutrition n, float i)
+        {
+            return new Nutrition((int)(n.Red * i), (int)(n.Green * i), (int)(n.Blue * i));
+        }
+
         public static Nutrition operator /(Nutrition n, int i)
         {
             return new Nutrition(n.Red / i, n.Green / i, n.Blue / i);
@@ -97,6 +102,23 @@ namespace LifeGame
         //valueの値を栄養の割合にして返す
         public Nutrition Percent(int value)
         {
+            if (Sum > 0)
+            {
+                return new Nutrition((int)(Red * ((double)value / (double)Sum)),(int)( Green * ((double)value / (double)Sum)),(int)( Blue * ((double)value / (double)Sum)));
+            }
+            else
+            {
+                return new Nutrition();
+            }
+        }
+
+        //valueの値を栄養の割合にして返すが、負の値になりそうになったら調整する
+        public Nutrition PercentNonNegative(int value)
+        {
+            if(value>Sum){
+                value=Sum;
+
+            }
             if (Sum > 0)
             {
                 return new Nutrition((int)(Red * ((double)value / (double)Sum)),(int)( Green * ((double)value / (double)Sum)),(int)( Blue * ((double)value / (double)Sum)));

@@ -21,6 +21,7 @@ namespace LifeGame
             ActMgr.RegisterAct(5, typeof(Age));
             ActMgr.RegisterAct(6, typeof(Produce));
             ActMgr.RegisterAct(7, typeof(GetNutFromLand));
+            ActMgr.RegisterAct(8,typeof(Scavenge));
         }
     }
 }

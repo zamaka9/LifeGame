@@ -60,6 +60,7 @@
     <Compile Include="Acts\GetNutFromLand.cs" />
     <Compile Include="Acts\Produce.cs" />
     <Compile Include="Acts\Recover.cs" />
+    <Compile Include="Acts\Scavenge.cs" />
     <Compile Include="Creature.cs" />
     <Compile Include="CreatureMgr.cs" />
     <Compile Include="Drawer.cs" />

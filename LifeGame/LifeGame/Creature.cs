@@ -77,7 +77,7 @@ namespace LifeGame
             else
             {
                 
-                if (Time - deadTime > 0)
+                if (Nutrition.Sum<=0)
                 {
                     Existence = false;
                 }
@@ -86,15 +86,15 @@ namespace LifeGame
 
             Time++;
         }
-        public void Draw()
+        public void Draw(int animTime,int speed)
         {
             if (Alive == true)
             {
-                drawer.AddDrawList(X, Y, 0, Size / 10, GH[(Time / 10) % 8]);
+                drawer.AddDrawList(X, Y, 0, Size / 10, GH[(animTime / speed) % 8]);
             }
             else
             {
-                drawer.AddDrawList(X, Y, 0, Size / 10, GH[(deadTime / 10) % 8]);
+                drawer.AddDrawList(X, Y, 0, Size / 10, GH[(deadAnimTime / speed) % 8]);
             }
         }
 
@@ -135,6 +135,7 @@ namespace LifeGame
             */
             //Landをどこから参照するか迷ったけど、Creaturemgrからにした
             //周囲9マスに平等に栄養をばらまく
+            /*
             Land land = mgr.Land;
             Nutrition nut = Nutrition / 9;
             int i = 0;
@@ -148,7 +149,7 @@ namespace LifeGame
                     i++;
                 }
             }
-           
+           */
         }
 
         //引数で与えられた生物との距離の2乗を返す。GetNearestCreatureで使うための存在
@@ -250,7 +251,8 @@ namespace LifeGame
             }
         }//VelocityXにこの値をかけた数字が実際にX,Yに加算される
 
-        int agePerTick=600;
+        int agePerTick=200;
+        int deadAnimTime;
     }
 }
 

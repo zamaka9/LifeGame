@@ -18,7 +18,7 @@ namespace LifeGame
             ActList = new List<int>(parentGene.ActList); // 値渡し
             if (Program.Rand.Next(5) == 0)
             {
-                ActList.Add(Program.Rand.Next(6));
+                ActList.Add(ActMgr.GetRandomActId());
             }
             if (Program.Rand.Next(40) == 0)
             {
@@ -51,6 +51,7 @@ namespace LifeGame
             //ActList.Add(1);
             ActList.Add(2);
             ActList.Add(7);
+            ActList.Add(8);
         }
 
         public int HP { get; private set; } = 0;//最大体力
