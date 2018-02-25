@@ -13,11 +13,11 @@ namespace LifeGame.Acts
         public override void Initialize(Creature owner)
         {
             base.Initialize(owner);
-            basicCost = new Nutrition(1000,100,500);//雑。将来的には主にサイズによってこの値を決めたい
+            basicCost = new Nutrition(1000,100,200);//雑。将来的には主にサイズによってこの値を決めたい
         }
         public override bool Update()
         {
-            Nutrition newNut = new Nutrition(0, 5000, 0);
+            Nutrition newNut = new Nutrition(0, 1000, 0);
             owner.Nutrition += newNut;
 
             return true;

@@ -13,22 +13,22 @@ namespace LifeGame
         public Gene(Gene parentGene)
         {
             Size = parentGene.Size + Program.Rand.Next(-5, 5);
-            if (Size < 0)
+            if (Size < 10)
             {
                 Size = 10;
             }
             HP = parentGene.HP + Program.Rand.Next(-50, 50);
             Nutrition = parentGene.Nutrition + new Nutrition().Rand(5);
             ActList = new List<int>(parentGene.ActList); // 値渡し
-            if (Program.Rand.Next(5) == 0)
+            if (Program.Rand.Next(20) == 0)
             {
                 ActList.Add(ActMgr.GetRandomActId());
             }
-            if (Program.Rand.Next(40) == 0)
+            if (Program.Rand.Next(20) == 0)
             {
                 if (ActList.Count > 1)
                 {
-                    ActList.RemoveAt(ActList.Count - 1);
+                    ActList.RemoveAt(Program.Rand.Next(ActList.Count-1));
                 }
             }
         }
@@ -44,8 +44,8 @@ namespace LifeGame
         public Gene()
         {
             Size = Program.Rand.Next(254) + 10;
-            HP = Size * 64 + Program.Rand.Next(255);
-            Nutrition.Rand(Size*10000);
+            HP = 1+ Program.Rand.Next(255)*64;
+            Nutrition.Rand(Size*30000);
             /*
             ActList.Add(Program.Rand.Next(6));
             ActList.Add(Program.Rand.Next(6));

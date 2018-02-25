@@ -19,7 +19,7 @@ namespace LifeGame
             ActMgr.RegisterAct(2, typeof(Move));
             ActMgr.RegisterAct(4, typeof(Recover));
             ActMgr.RegisterAct(5, typeof(Age));
-            ActMgr.RegisterAct(6, typeof(Produce));
+            //ActMgr.RegisterAct(6, typeof(Produce));
             ActMgr.RegisterAct(7, typeof(GetNutFromLand));
             ActMgr.RegisterAct(8,typeof(Scavenge));
             ActMgr.RegisterAct(9, typeof(Photosynthesis));

@@ -14,7 +14,7 @@ namespace LifeGame.Acts
         public override bool Update()
         {
             //if (GetRand(Cost) == 0)
-            if (!(owner.Nutrition > (cost * 2)))
+            if (!(owner.Nutrition > (cost * 3)))
             {
                 return false;
             }

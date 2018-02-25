@@ -13,6 +13,7 @@ namespace LifeGame.Acts
         public override void Initialize(Creature owner)
         {
             base.Initialize(owner);
+            nutToScavenge = owner.Size * 400;
         }
 
         public override bool Update()
@@ -24,10 +25,10 @@ namespace LifeGame.Acts
                 {
                     if (t != owner)
                     {
-                        if (t.HP <= 0)
+                        if (t.HP <= 0 && t.Nutrition.Sum>nutToScavenge*2)
                         {
                             //90000の栄養を死体から取得する
-                            Nutrition predation = t.Nutrition.PercentNonNegative(90000);
+                            Nutrition predation = t.Nutrition.PercentNonNegative(nutToScavenge);
                             //うち半分は自分が得る
                             owner.Nutrition += predation * efficiency;
                             //残り半分は地面ばらまく。この割合は将来的にはパーツ形状などによって変化
@@ -53,7 +54,8 @@ namespace LifeGame.Acts
             }
             return false;
         }
-        public float efficiency = 0.5f;
+        public float efficiency;
+        public int nutToScavenge;
     }
 
 
