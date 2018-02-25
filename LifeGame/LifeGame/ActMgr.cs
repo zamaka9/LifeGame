@@ -107,7 +107,7 @@ namespace LifeGame
             return actIdList[Program.Rand.Next(actIdList.Count)];
         }
 
-        List<Act> ActList= new List<Act>();
+        public List<Act> ActList= new List<Act>();
 
         
         //ゲーム内で登場しうるActをidと一緒に保存

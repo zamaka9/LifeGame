@@ -12,19 +12,17 @@ namespace LifeGame.Acts
         public override void Initialize(Creature owner)
         {
             base.Initialize(owner);
-            this.requirement = new Nutrition(Program.Rand.Next(16), Program.Rand.Next(16), Program.Rand.Next(16));
+            cost = new Nutrition(Program.Rand.Next(16)*100, Program.Rand.Next(16)*100, Program.Rand.Next(16)*100);
         }
 
         public override bool Update()
         {
-            if(owner.HP<owner.MaxHP && requirement < owner.Nutrition)
+            if(owner.HP<owner.MaxHP)
             {
-                owner.Nutrition -= requirement;
-                owner.HP += requirement.Sum;
+                owner.HP += cost.Sum/100;
                 return true;
             }
             return false;
         }
-        public Nutrition requirement;
     }
 }

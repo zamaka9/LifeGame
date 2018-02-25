@@ -12,7 +12,11 @@ namespace LifeGame
 
         public Gene(Gene parentGene)
         {
-            Size = parentGene.Size;
+            Size = parentGene.Size + Program.Rand.Next(-5, 5);
+            if (Size < 0)
+            {
+                Size = 10;
+            }
             HP = parentGene.HP + Program.Rand.Next(-50, 50);
             Nutrition = parentGene.Nutrition + new Nutrition().Rand(5);
             ActList = new List<int>(parentGene.ActList); // 値渡し
@@ -39,9 +43,9 @@ namespace LifeGame
 
         public Gene()
         {
-            Size = Program.Rand.Next(254) + 1;
+            Size = Program.Rand.Next(254) + 10;
             HP = Size * 64 + Program.Rand.Next(255);
-            Nutrition.Rand(Nutrition.MaxValue);
+            Nutrition.Rand(Size*10000);
             /*
             ActList.Add(Program.Rand.Next(6));
             ActList.Add(Program.Rand.Next(6));
@@ -51,7 +55,7 @@ namespace LifeGame
             //ActList.Add(1);
             ActList.Add(2);
             ActList.Add(7);
-            ActList.Add(8);
+            //ActList.Add(8);
         }
 
         public int HP { get; private set; } = 0;//最大体力

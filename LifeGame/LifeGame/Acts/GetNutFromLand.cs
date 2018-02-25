@@ -18,7 +18,7 @@ namespace LifeGame.Acts
         {
             Nutrition landnut = Land.GetLandNutrition(owner.Position);
             //呼び出されるたび、合計で15の栄養を吸収
-            int nutToGet = 100000;
+            int nutToGet = 10000;
             Nutrition predation = landnut.PercentNonNegative(nutToGet);
             Land.SetLandNutrition(owner.Position, landnut - predation);
             owner.Nutrition += predation;

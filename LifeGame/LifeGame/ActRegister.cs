@@ -22,6 +22,8 @@ namespace LifeGame
             ActMgr.RegisterAct(6, typeof(Produce));
             ActMgr.RegisterAct(7, typeof(GetNutFromLand));
             ActMgr.RegisterAct(8,typeof(Scavenge));
+            ActMgr.RegisterAct(9, typeof(Photosynthesis));
+            ActMgr.RegisterAct(10, typeof(NitrogenFixation));
         }
     }
 }

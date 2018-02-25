@@ -108,7 +108,7 @@ namespace LifeGame
 
         Vector2D camera = new Vector2D(0.0f, Program.Window_Y / 2);
         int zoomLevel = 0;
-        float zoom = 0.0f;
+        public float zoom = 0.0f;
         Vector2D oldMouse = new Vector2D(0, 0);
         int mouseRightCount;
     }

@@ -26,8 +26,8 @@ namespace LifeGame.Acts
                     {
                         if (t.HP <= 0)
                         {
-                            //900000の栄養を死体から取得する
-                            Nutrition predation = t.Nutrition.PercentNonNegative(900000);
+                            //90000の栄養を死体から取得する
+                            Nutrition predation = t.Nutrition.PercentNonNegative(90000);
                             //うち半分は自分が得る
                             owner.Nutrition += predation * efficiency;
                             //残り半分は地面ばらまく。この割合は将来的にはパーツ形状などによって変化

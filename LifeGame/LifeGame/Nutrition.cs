@@ -147,6 +147,35 @@ namespace LifeGame
             return new Nutrition(Red % by < of ? 0 : 1, Green % by < of ? 0 : 1, Blue % by < of ? 0 : 1) + this / by;
         }
 
+        public override string ToString()
+        {
+            return Red + "," + Green + "," + Blue;
+        }
+
+
+        /// <summary>
+        /// byで与えられた栄養値を上限として、現在栄養値を丸めた値を返す
+        /// </summary>
+        /// <param name="by"></param>
+        /// <returns></returns>
+        public Nutrition clamp(Nutrition by)
+        {
+            Nutrition nut = this.Copy();
+            if (nut.Red > by.Red)
+            {
+                nut.Red = by.Red;
+            }
+            if (nut.Green > by.Green)
+            {
+                nut.Green = by.Green;
+            }
+            if (nut.Blue > by.Blue)
+            {
+                nut.Blue = by.Blue;
+            }
+            return nut;
+        }
+
         //栄養量の総和を返す
         public int Sum => (Red + Green + Blue);
 
@@ -155,5 +184,7 @@ namespace LifeGame
         public int Blue { get; private set; } = 0;
 
         public static int MaxValue = 0xffffff;//=16,777,215 栄養の最大値
+
+        public static Nutrition ZERO = new Nutrition();
     }
 }

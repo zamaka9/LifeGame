@@ -12,7 +12,8 @@ namespace LifeGame
         public static Land Land;
         public Creature owner;
         public int id;//Actごとに固有のID。例えばどの生物のどのパーツでも、Moveのidは1である
-        public Nutrition cost=new Nutrition();//Actが実行されたときに消費する栄養
+        public Nutrition cost=new Nutrition();//Actが実行され、成功したときに消費する栄養
+        public Nutrition basicCost = new Nutrition();//Actが実行され、成功失敗にかかわらず消費する栄養
 
         public virtual void Initialize(Creature owner) {
             this.owner = owner;
@@ -31,10 +32,21 @@ namespace LifeGame
         /// </summary>
         public virtual void UpdateAndConsumeNut ()
         {
-            if (Update())
+            if (owner.Nutrition > this.cost + this.basicCost)
             {
-                owner.Nutrition -= this.cost;
+                if (Update())
+                {
+                    owner.Nutrition -= this.cost;
+                }
+                owner.Nutrition -= this.basicCost;
+            }
+            else
+            {
+                OnNutritionNotEnough();
             }
         }
+
+        public virtual void OnNutritionNotEnough() { }
+
     }
 }

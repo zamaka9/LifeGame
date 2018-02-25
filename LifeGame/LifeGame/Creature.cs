@@ -17,14 +17,7 @@ namespace LifeGame
 
         public Creature(CreatureMgr mgr,Creature parent) : this(mgr, new Gene(parent.Gene), parent.Nutrition.Copy())
         {
-
-            Size = Gene.Size;
-            MaxHP = Gene.HP;
-            HP =MaxHP;
-            MaxNutrition = Gene.Nutrition;
             
-            Nutrition = parent.Nutrition.Copy();
-
             Position = parent.Position + new Vector2D(Program.Rand.Next(-20, 20), Program.Rand.Next(-20, 20));
 
         }
@@ -41,7 +34,8 @@ namespace LifeGame
         public Creature(CreatureMgr mgr,Gene gene,Nutrition nutrition)
         {
             this.mgr = mgr;
-           
+
+            Gene = gene;
             Size = gene.Size;
             MaxHP = gene.HP;
             HP = Program.Rand.Next(MaxHP);
@@ -64,9 +58,22 @@ namespace LifeGame
         {
             if (Alive == true)
             {//生存なう
+                Nutrition -= new Nutrition(50, 0, 0);
                 MaxHP-=agePerTick;
                 HP-=agePerTick;
                 ActMgr.Update();
+
+                if (!(this.Nutrition > Nutrition.ZERO))
+                {
+                    this.HP = 0;
+                }
+
+                //突然の死
+                if (Program.Rand.Next(1000)==0)
+                {
+                    this.HP = 0;
+                }
+                Nutrition.clamp(MaxNutrition);
                 
                 if (HP <= 0)
                 {
@@ -91,13 +98,16 @@ namespace LifeGame
         }
         public void Draw(int animTime,int speed)
         {
-            if (Alive == true)
+            if (Size * drawer.zoom > 20)
             {
-                drawer.AddDrawList(Position, 0, Size / 10, GH[(animTime / speed) % 8]);
-            }
-            else
-            {
-                drawer.AddDrawList(Position, 0, Size / 10, GH[(deadAnimTime / speed) % 8]);
+                if (Alive == true)
+                {
+                    drawer.AddDrawList(Position, 0, Size / 10, GH[(animTime / speed) % 8]);
+                }
+                else
+                {
+                    drawer.AddDrawList(Position, 0, Size / 10, GH[(deadAnimTime / speed) % 8]);
+                }
             }
         }
 
@@ -192,9 +202,9 @@ namespace LifeGame
         public int Time { get; private set; } = 0;//時間
         int deadTime = 0;//死亡時刻
 
-        Gene Gene { get; set; } = new Gene();//遺伝子クラス
+        Gene Gene { get; set; }//遺伝子クラス
 
-        ActMgr ActMgr = new ActMgr();//行動パターン管理クラス
+        public ActMgr ActMgr = new ActMgr();//行動パターン管理クラス
 
         public List<Creature> TargetList { get; set; } = new List<Creature>();//同エリア内のCreatureを持つリストを指すポインタ
 
@@ -232,7 +242,7 @@ namespace LifeGame
             }
         }//VelocityXにこの値をかけた数字が実際にX,Yに加算される
 
-        int agePerTick=50;
+        int agePerTick=1;
         int deadAnimTime;
     }
 }

@@ -12,7 +12,9 @@ namespace LifeGame.Acts
         public override void Initialize(Creature owner)
         {
             base.Initialize(owner);
-            this.strength = owner.Size;
+            this.strength = owner.Size*10;
+            cost = new Nutrition(strength, 100, 0);
+            basicCost = new Nutrition(100, 1000, 100);
         }
 
         public override bool Update()
@@ -22,9 +24,9 @@ namespace LifeGame.Acts
             {
                 foreach (var t in target)
                 {
-                    if (t != owner)
+                    if (t != owner && t.Alive)
                     {
-                        if (strength - t.Size>10)
+                        if (owner.Size - t.Size>10)
                         {
                             t.HP -= strength;
                             return true;

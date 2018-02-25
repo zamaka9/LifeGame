@@ -14,10 +14,11 @@ namespace LifeGame.Acts
             base.Initialize(owner);
 
             SpeedLevel = Program.Rand.Next(9);
-            MaxSpeed = (Program.Rand.Next(20) + 1) / 10.0f;
+            MaxSpeed = owner.Size*(Program.Rand.Next(20) + 1) / 4000.0f;
             //Speed = rand_normal(1.0f,1.9f);
             Direction = (float)((Program.Rand.Next(359) / 180.0f) * Math.PI);
             Speed = MaxSpeed * SpeedLevel / 10;
+            cost = new Nutrition((int)(500*MaxSpeed),100,100);
         }
 
         public override bool Update()

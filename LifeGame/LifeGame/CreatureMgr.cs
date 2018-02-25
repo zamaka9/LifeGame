@@ -96,7 +96,7 @@ namespace LifeGame
         int TimeCount = 0;
 
         int timer;//CreatureMgrの方で管理します
-        int timerMax = 40;//書き換え非推奨　TimerMaxを使ってください
+        int timerMax = 10;//書き換え非推奨　TimerMaxを使ってください
         public bool hasTimerUpdated;//直前のフレームにTimerMaxが書き換えられたときにtrue
 
         public int TimerMax
