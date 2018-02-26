@@ -25,7 +25,7 @@ namespace LifeGame.Acts
                 {
                     if (t != owner)
                     {
-                        if (t.HP <= 0 && t.Nutrition.Sum>nutToScavenge*2)
+                        if (t.HP <= 0 )
                         {
                             //90000の栄養を死体から取得する
                             Nutrition predation = t.Nutrition.PercentNonNegative(nutToScavenge);
@@ -54,7 +54,7 @@ namespace LifeGame.Acts
             }
             return false;
         }
-        public float efficiency;
+        public float efficiency=0.5f;
         public int nutToScavenge;
     }
 

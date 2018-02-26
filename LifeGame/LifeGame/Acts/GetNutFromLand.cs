@@ -14,7 +14,7 @@ namespace LifeGame.Acts
         {
             base.Initialize(owner);
             nutToGet = owner.Size * 100;
-            basicCost = new Nutrition(100,100,10);
+            basicCost = new Nutrition(owner.Size*10, owner.Size*10, owner.Size);
         }
         public override bool Update()
         {
