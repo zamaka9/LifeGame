@@ -176,6 +176,29 @@ namespace LifeGame
             return nut;
         }
 
+        /// <summary>
+        /// byで与えられた栄養値を下限として、現在栄養値を丸めた値を返す
+        /// </summary>
+        /// <param name="by"></param>
+        /// <returns></returns>
+        public Nutrition clamp_floor(Nutrition by)
+        {
+            Nutrition nut = this.Copy();
+            if (nut.Red < by.Red)
+            {
+                nut.Red = by.Red;
+            }
+            if (nut.Green <by.Green)
+            {
+                nut.Green = by.Green;
+            }
+            if (nut.Blue < by.Blue)
+            {
+                nut.Blue = by.Blue;
+            }
+            return nut;
+        }
+
         //栄養量の総和を返す
         public int Sum => (Red + Green + Blue);
 

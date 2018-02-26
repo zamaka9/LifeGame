@@ -18,6 +18,10 @@ namespace LifeGame
                 Size = 10;
             }
             HP = parentGene.HP + Program.Rand.Next(-50, 50);
+            if (HP < 1)
+            {
+                HP = 1;
+            }
             Nutrition = parentGene.Nutrition + new Nutrition().Rand(5);
             ActList = new List<int>(parentGene.ActList); // 値渡し
             if (Program.Rand.Next(20) == 0)

@@ -8,7 +8,7 @@ namespace LifeGame.Acts
         public override void Initialize(Creature owner)
         {
             base.Initialize(owner);
-            cost = new Nutrition(owner.Size * 2000, owner.Size * 3000, 1000);
+            cost = new Nutrition(owner.Size * 1200, owner.Size * 2000, 1000);
         }
 
         public override bool Update()

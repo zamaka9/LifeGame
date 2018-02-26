@@ -58,10 +58,12 @@ namespace LifeGame
         {
             if (Alive == true)
             {//生存なう
-                Nutrition -= new Nutrition(50, 0, 0);
+                
                 MaxHP-=agePerTick;
                 HP-=agePerTick;
                 ActMgr.Update();
+                Nutrition -= new Nutrition(Size, Size/50, Size/50);
+                Nutrition.clamp_floor(Nutrition.ZERO);
 
                 if (!(this.Nutrition > Nutrition.ZERO))
                 {

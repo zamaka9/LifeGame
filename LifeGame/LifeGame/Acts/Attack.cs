@@ -12,7 +12,7 @@ namespace LifeGame.Acts
         public override void Initialize(Creature owner)
         {
             base.Initialize(owner);
-            this.strength = owner.Size*10;
+            this.strength = owner.Size*1;
             cost = new Nutrition(strength, 100, 0);
             basicCost = new Nutrition(100, 1000, 100);
         }
