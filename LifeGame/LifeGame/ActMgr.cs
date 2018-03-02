@@ -9,16 +9,18 @@ namespace LifeGame
 {
     class ActMgr
     {
-        public void Initialize(Creature owner, List<Creature> targetList, List<int> actions)
+        public void Initialize(Creature owner, List<Creature> targetList, IDictionary<int, int> actions)
         {
 
             ActList = new List<Act>();
-            foreach(int act in actions)
+            for (int i = 0; i < actions.Count; i++)
             {
-                var args= new Object[] { };
-                if (!ActClassMap.ContainsKey(act)) continue;
-                Act actInstance = (Act)(Activator.CreateInstance(ActClassMap[act], args));
-                actInstance.id = act;
+                var args = new Object[] { };
+                int key = actions.Keys.ElementAt(i);
+                if (!ActClassMap.ContainsKey(key)) continue;
+                Act actInstance = (Act)(Activator.CreateInstance(ActClassMap[key], args));
+                actInstance.id = key;
+                actInstance.level = actions[key];
                 ActList.Add(actInstance);
                 /*
                 switch (act)
@@ -58,18 +60,19 @@ namespace LifeGame
             //Actの初期化
             foreach (Act act in ActList)
             {
-                act.Initialize(owner);
+                act.Initialize(owner, act.level);
+                act.SetCostFromCostBase();
             }
         }
 
         public void Update()
         {
-            
+
             foreach (Act act in ActList)
             {
 
-                    act.UpdateAndConsumeNut();
-                
+                act.UpdateAndConsumeNut();
+
             }
         }
         /// <summary>
@@ -80,16 +83,16 @@ namespace LifeGame
         /// <param name="id"> Act固有のidです</param>
         /// <param name="actType">Actのクラスを表すTypeです</param>
         /// <returns>成功したらtrue,失敗したらfalseを返します</returns>
-        public static bool RegisterAct(int id,Type actType)
+        public static bool RegisterAct(int id, Type actType)
         {
             if (!actType.IsSubclassOf(typeof(Act)))
             {
-                Console.WriteLine(actType.ToString()+"はActクラスを継承していないため登録できません");
+                Console.WriteLine(actType.ToString() + "はActクラスを継承していないため登録できません");
                 return false;
             }
             if (ActClassMap.ContainsKey(id))
             {
-                Console.WriteLine(actType.ToString() + "と"+ActClassMap[id].ToString()+"のIDが両方とも"+id+"のため登録できません");
+                Console.WriteLine(actType.ToString() + "と" + ActClassMap[id].ToString() + "のIDが両方とも" + id + "のため登録できません");
                 return false;
             }
             //Console.WriteLine(actType.ToString()+ "," + id);
@@ -107,11 +110,11 @@ namespace LifeGame
             return actIdList[Program.Rand.Next(actIdList.Count)];
         }
 
-        public List<Act> ActList= new List<Act>();
+        public List<Act> ActList = new List<Act>();
 
-        
+
         //ゲーム内で登場しうるActをidと一緒に保存
-        public static IDictionary<int,Type> ActClassMap = new Dictionary<int,Type>();
+        public static IDictionary<int, Type> ActClassMap = new Dictionary<int, Type>();
         public static List<int> actIdList = new List<int>();
     }
 }

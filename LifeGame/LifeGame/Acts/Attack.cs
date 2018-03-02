@@ -6,15 +6,16 @@ using System.Threading.Tasks;
 
 namespace LifeGame.Acts
 {
-    //仮実装。登録されないので今のところ無意味
+    //仮実装
     class Attack : Act
     {
-        public override void Initialize(Creature owner)
+        public override void Initialize(Creature owner, int level)
         {
-            base.Initialize(owner);
-            this.strength = owner.Size*1;
-            cost = new Nutrition(strength, 100, 0);
-            basicCost = new Nutrition(100, 1000, 100);
+            base.Initialize(owner, level);
+            this.strength = owner.Size*level;
+            costbase = new Nutrition(strength, 100, 0);
+            requirementbase = new Nutrition(0, owner.Size * 5000, owner.Size * 10000);
+            //basicCostbase = new Nutrition(100, 1000, 100);
         }
 
         public override bool Update()

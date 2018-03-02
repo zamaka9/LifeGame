@@ -62,7 +62,7 @@ namespace LifeGame
                 MaxHP-=agePerTick;
                 HP-=agePerTick;
                 ActMgr.Update();
-                Nutrition -= new Nutrition(Size, Size/50, Size/50);
+                Nutrition -= new Nutrition(Size*5, Size, Size);
                 Nutrition.clamp_floor(Nutrition.ZERO);
 
                 if (!(this.Nutrition > Nutrition.ZERO))

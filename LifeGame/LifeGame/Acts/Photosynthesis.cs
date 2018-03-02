@@ -10,14 +10,15 @@ namespace LifeGame.Acts
     class Photosynthesis : Act
     {
 
-        public override void Initialize(Creature owner)
+        public override void Initialize(Creature owner, int level)
         {
-            base.Initialize(owner);
-            basicCost = new Nutrition(owner.Size, owner.Size, owner.Size*10);//雑。将来的には主にサイズによってこの値を決めたい
+            base.Initialize(owner, level);
+            costbase = new Nutrition(owner.Size, owner.Size, owner.Size)*level;
+            requirementbase = new Nutrition(0, owner.Size*2000, owner.Size*10000)*level;
         }
         public override bool Update()
         {
-            Nutrition newNut = new Nutrition(owner.Size*100, 0, 0);
+            Nutrition newNut = new Nutrition(owner.Size*4, 0, 0)*level;
             owner.Nutrition += newNut;
 
             return true;

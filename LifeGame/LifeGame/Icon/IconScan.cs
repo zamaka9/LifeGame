@@ -47,7 +47,7 @@ namespace LifeGame
                     //所持している機能を数字で表示
                     for(int i = 0; i < Object.ActMgr.ActList.Count; i++)
                     {
-                        DX.DrawString(Program.Window_X - 16-(i+1)*16, 60, Object.ActMgr.ActList[i].id.ToString(), DX.GetColor(255, 255, 255));
+                        DX.DrawString(Program.Window_X - 16-(i+1)*32, 60, Object.ActMgr.ActList[i].id.ToString()+"."+ Object.ActMgr.ActList[i].level.ToString(), DX.GetColor(255, 255, 255));
                     }
                     
                     // ▽カーソルを表示

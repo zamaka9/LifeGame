@@ -10,11 +10,11 @@ namespace LifeGame.Acts
     class GetNutFromLand : Act
     {
 
-        public override void Initialize(Creature owner)
+        public override void Initialize(Creature owner, int level)
         {
-            base.Initialize(owner);
-            nutToGet = owner.Size * 100;
-            basicCost = new Nutrition(owner.Size*10, owner.Size*10, owner.Size);
+            base.Initialize(owner, level);
+            nutToGet = owner.Size * 100*level;
+            costbase = new Nutrition(owner.Size*10, owner.Size*10, owner.Size)*level;
         }
         public override bool Update()
         {

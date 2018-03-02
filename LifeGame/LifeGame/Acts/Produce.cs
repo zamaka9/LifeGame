@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace LifeGame.Acts
 {
-    //仮実装。登録されないので今のところ無意味
+    //GetNutFromLandに役割が移ったので使われていません
     class Produce : Act
     {
 
-        public override void Initialize(Creature owner)
+        public override void Initialize(Creature owner, int level)
         {
-            base.Initialize(owner);
+            base.Initialize(owner, level);
             this.requirement = owner.Size / 2;
         }
         public override bool Update()

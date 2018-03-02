@@ -5,19 +5,18 @@ namespace LifeGame.Acts
     class Divide : Act
     {
 
-        public override void Initialize(Creature owner)
+        
+        public override void Initialize(Creature owner,int level)
         {
-            base.Initialize(owner);
-            cost = new Nutrition(owner.Size * 1200, owner.Size * 2000, 1000);
+            base.Initialize(owner,level);
+            costbase = new Nutrition(owner.Size * 1200, owner.Size * 1200, 1000);
+            requirementbase = costbase * 3;
         }
 
         public override bool Update()
         {
             //if (GetRand(Cost) == 0)
-            if (!(owner.Nutrition > (cost * 3)))
-            {
-                return false;
-            }
+            
             //Console.WriteLine(owner.Nutrition.ToString()+","+cost.ToString());
             owner.Nutrition = (owner.Nutrition / 2);
             CreatureMgr.CreateCreature(owner);
