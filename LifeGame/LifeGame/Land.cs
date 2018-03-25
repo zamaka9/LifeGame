@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DxLibDLL;
+using LifeGame.Landforms;
 
 namespace LifeGame
 {
@@ -23,6 +24,10 @@ namespace LifeGame
             //Spaceを初期化
             Space = new List<Creature>[Program.Space_X, Program.Space_Y];
             LandNutrition = new Nutrition[Program.Space_X, Program.Space_Y];
+            LandformsManager = new LandformsManager();
+
+            LandformsManager.Initialize(this);
+
             for (int i = 0; i < Program.Space_X; i++)
             {
                 for (int j = 0; j < Program.Space_Y; j++)
@@ -32,10 +37,12 @@ namespace LifeGame
                     LandNutrition[i, j].Rand(Nutrition.MaxValue/4, Nutrition.MaxValue / 2);
                 }
             }
+
         }
 
         public void Update()
         {
+            LandformsManager.Update();
             foreach(List<Creature> space in Space)
             {
                 space.Clear();
@@ -91,9 +98,20 @@ namespace LifeGame
             LandNutrition[X,Y] = Nut;
         }
 
+        public LandFormBase GetLandformAt(int x,int y)
+        {
+            return LandformsManager.landFormBase[x, y];
+        }
+
+        public LandFormBase GetLandformAt(Vector2D vector)
+        {
+            return LandformsManager.landFormBase[ReturnX(vector.X), ReturnY(vector.Y)];
+        }
+
         List<Creature>[,] Space;
         Nutrition[,] LandNutrition;
         Drawer Drawer;
+        LandformsManager LandformsManager;
 
         int ReturnX(float x)
         {

@@ -59,6 +59,7 @@
     <Compile Include="Acts\Move.cs" />
     <Compile Include="Acts\GetNutFromLand.cs" />
     <Compile Include="Acts\NitorogenFixation.cs" />
+    <Compile Include="Acts\Chemoautotroph.cs" />
     <Compile Include="Acts\Photosynthesis.cs" />
     <Compile Include="Acts\Produce.cs" />
     <Compile Include="Acts\Recover.cs" />
@@ -74,6 +75,11 @@
     <Compile Include="Icon\IconScan.cs" />
     <Compile Include="Icon\IconThunderbolt.cs" />
     <Compile Include="Land.cs" />
+    <Compile Include="LandformRegister.cs" />
+    <Compile Include="LandformsManager.cs" />
+    <Compile Include="Landforms\LandformEmpty.cs" />
+    <Compile Include="Landforms\HydrothermalVent.cs" />
+    <Compile Include="Landforms\LandFormBase.cs" />
     <Compile Include="Nutrition.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Vector2D.cs" />

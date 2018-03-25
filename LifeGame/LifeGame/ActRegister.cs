@@ -24,6 +24,7 @@ namespace LifeGame
             ActMgr.RegisterAct(8,typeof(Scavenge));
             ActMgr.RegisterAct(9, typeof(Photosynthesis));
             ActMgr.RegisterAct(10, typeof(NitrogenFixation));
+            ActMgr.RegisterAct(11, typeof(Chemoautotroph));
         }
     }
 }
