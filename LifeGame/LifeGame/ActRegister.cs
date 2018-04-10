@@ -16,7 +16,7 @@ namespace LifeGame
         {
             ActMgr.RegisterAct(0, typeof(Divide));
             ActMgr.RegisterAct(1, typeof(Attack));
-            ActMgr.RegisterAct(2, typeof(Move));
+            //ActMgr.RegisterAct(2, typeof(Move));
             ActMgr.RegisterAct(4, typeof(Recover));
             ActMgr.RegisterAct(5, typeof(Age));
             //ActMgr.RegisterAct(6, typeof(Produce));
@@ -25,6 +25,7 @@ namespace LifeGame
             ActMgr.RegisterAct(9, typeof(Photosynthesis));
             ActMgr.RegisterAct(10, typeof(NitrogenFixation));
             ActMgr.RegisterAct(11, typeof(Chemoautotroph));
+            ActMgr.RegisterAct(12, typeof(Stabilize));
         }
     }
 }

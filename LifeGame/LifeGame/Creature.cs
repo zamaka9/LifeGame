@@ -61,21 +61,42 @@ namespace LifeGame
                 
                 MaxHP-=agePerTick;
                 HP-=agePerTick;
+                if (!isStable)
+                {
+                    int freq = 10;
+                    int SpeedLevel = 5;
+                    float MaxSpeed = 0.5F;
+                    if (Program.Rand.Next(freq) == 0)
+                    {
+
+                        float Direction = (float)((Program.Rand.Next(359) / 180.0f) * Math.PI);
+                        float Speed = MaxSpeed * SpeedLevel / 10;
+                        //速度はCreatureの方で持つようにしました
+                        Velocity = new Vector2D((float)Math.Cos(Direction), (float)Math.Sin(Direction)) * Speed;
+                    }
+                }
                 ActMgr.Update();
                 Nutrition -= new Nutrition(Size*5, Size, Size);
-                Nutrition.clamp_floor(Nutrition.ZERO);
+                Nutrition=Nutrition.clamp_floor(Nutrition.ZERO);
 
                 if (!(this.Nutrition > Nutrition.ZERO))
                 {
                     this.HP = 0;
                 }
+                if (!(this.Nutrition < this.MaxNutrition))
+                {
+                    Nutrition lastNut = this.Nutrition.Copy();
+                    this.Nutrition = this.Nutrition.clamp(this.MaxNutrition);
+                    mgr.Land.SetLandNutrition(Position, mgr.Land.GetLandNutrition(Position)+lastNut - Nutrition);
+                }
 
-                //突然の死
-                if (Program.Rand.Next(1000)==0)
+                    //突然の死
+                    if (Program.Rand.Next(1000)==0)
                 {
                     this.HP = 0;
                 }
-                Nutrition.clamp(MaxNutrition);
+                
+                //Nutrition.clamp(MaxNutrition);
                 
                 if (HP <= 0)
                 {
@@ -246,6 +267,9 @@ namespace LifeGame
 
         int agePerTick=1;
         int deadAnimTime;
+
+        //falseのときランダム移動し、trueのとき任意移動する
+        public bool isStable;
     }
 }
 

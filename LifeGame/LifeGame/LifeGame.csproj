@@ -56,6 +56,7 @@
     <Compile Include="Acts\Age.cs" />
     <Compile Include="Acts\Attack.cs" />
     <Compile Include="Acts\Divide.cs" />
+    <Compile Include="Acts\Stabilize.cs" />
     <Compile Include="Acts\Move.cs" />
     <Compile Include="Acts\GetNutFromLand.cs" />
     <Compile Include="Acts\NitorogenFixation.cs" />

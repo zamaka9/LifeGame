@@ -68,7 +68,7 @@ namespace LifeGame
         {
             Size = Program.Rand.Next(254) + 10;
             HP = 1+ Program.Rand.Next(255)*64;
-            Nutrition.Rand(Size*30000);
+            Nutrition= new Nutrition(Size * 7200, Size * 7200, Size * 7200);
             /*
             ActList.Add(Program.Rand.Next(6));
             ActList.Add(Program.Rand.Next(6));
@@ -76,7 +76,7 @@ namespace LifeGame
             */
             ActList.Add(0,1);
             //ActList.Add(1);
-            ActList.Add(2,1);
+            //ActList.Add(2,1);
             ActList.Add(7,1);
             //ActList.Add(8);
         }

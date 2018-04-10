@@ -14,7 +14,7 @@ namespace LifeGame.Acts
         {
             base.Initialize(owner, level);
             costbase = new Nutrition(owner.Size, owner.Size, owner.Size)*level;
-            requirementbase = new Nutrition(0, owner.Size*2000, owner.Size*10000)*level;
+            requirementbase = new Nutrition(0, owner.Size*2000, owner.Size*5000)*level;
         }
         public override bool Update()
         {

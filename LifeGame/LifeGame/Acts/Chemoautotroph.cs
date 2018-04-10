@@ -13,13 +13,13 @@ namespace LifeGame.Acts
         public override void Initialize(Creature owner, int level)
         {
             base.Initialize(owner, level);
-            costbase = new Nutrition(0,owner.Size/2, 0) *level;
+            costbase = new Nutrition(owner.Size, owner.Size, owner.Size) *level;
         }
         public override bool Update()
         {
             if (owner.mgr.Land.GetLandformAt(owner.Position).id == 1)
             {
-                Nutrition newNut = new Nutrition(owner.Size * 8, owner.Size, owner.Size*2) * level;
+                Nutrition newNut = new Nutrition(owner.Size * 8, owner.Size*4, owner.Size*4) * level;
                 owner.Nutrition += newNut;
                 Console.WriteLine(newNut.ToString());
                 return true;

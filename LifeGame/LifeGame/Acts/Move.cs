@@ -8,12 +8,12 @@ namespace LifeGame.Acts
 {
     class Move:Act
     {
-
+        //栄養値が増えている時にだけ動くという仕様にしてみました
         public override void Initialize(Creature owner, int level)
         {
             base.Initialize(owner, level);
             SpeedLevel = Program.Rand.Next(9);
-            MaxSpeed = level*owner.Size*(Program.Rand.Next(20) + 1) / 20000.0f;
+            MaxSpeed = level*owner.Size*(Program.Rand.Next(20) + 1) / 10000.0f;
             //Speed = rand_normal(1.0f,1.9f);
             Direction = (float)((Program.Rand.Next(359) / 180.0f) * Math.PI);
             Speed = MaxSpeed * SpeedLevel / 10;
@@ -22,6 +22,15 @@ namespace LifeGame.Acts
 
         public override bool Update()
         {
+            int l= lastNutSum;
+            lastNutSum = owner.Nutrition.Sum;
+            if (owner.Nutrition.Sum > l)
+            {
+                SpeedLevel = 0;
+                owner.Velocity = new Vector2D();
+                return false;
+            }
+            
             //確率で向きと移動速度の変更
             //変更確率をfreqで指定 初期値10
             if (Program.Rand.Next(freq) == 0)
@@ -65,5 +74,6 @@ namespace LifeGame.Acts
         int SpeedLevel;//移動速度の段階（10段階で0で止まる）
         float Direction;//向き
         int freq = 10;
+        int lastNutSum=0;
     }
 }
