@@ -48,9 +48,9 @@ namespace LifeGame
 
                 // 栄養を表示
                 DX.DrawString(Program.Window_X - 128, 76, targetPos.X.ToString() + " " + targetPos.Y.ToString(), DX.GetColor(255, 255, 255));
-                DX.DrawString(Program.Window_X - 128, 96, targetNutrition.Red.ToString(), DX.GetColor(255, 100, 100));
-                DX.DrawString(Program.Window_X - 128, 112, targetNutrition.Green.ToString(), DX.GetColor(100, 255, 100));
-                DX.DrawString(Program.Window_X - 128, 128, targetNutrition.Blue.ToString(), DX.GetColor(100, 100, 255));
+                DX.DrawString(Program.Window_X - 128, 96, targetNutrition.Red.ToString() + ":" + (targetNutrition.Red >> 16).ToString(), DX.GetColor(255, 100, 100));
+                DX.DrawString(Program.Window_X - 128, 112, targetNutrition.Green.ToString() + ":" + (targetNutrition.Green >> 16).ToString(), DX.GetColor(100, 255, 100));
+                DX.DrawString(Program.Window_X - 128, 128, targetNutrition.Blue.ToString() + ":" + (targetNutrition.Blue >> 16).ToString(), DX.GetColor(100, 100, 255));
             }
         }
 

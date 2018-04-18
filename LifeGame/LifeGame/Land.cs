@@ -13,6 +13,8 @@ namespace LifeGame
     /// </summary>
     class Land
     {
+        int nessuihunsyutukouGraphicHandle;
+
         public Land()
         {
 
@@ -20,6 +22,8 @@ namespace LifeGame
 
         public void Initialize(Drawer drawer){
             Drawer = drawer;
+
+            nessuihunsyutukouGraphicHandle = DX.LoadGraph("Data/nessuihunsyutukou.png");
 
             //Spaceを初期化
             Space = new List<Creature>[Program.Space_X, Program.Space_Y];
@@ -53,6 +57,10 @@ namespace LifeGame
         {
             for(int i = 0; i < Program.Space_X; i++){
                 for(int j = 0; j < Program.Space_Y; j++){
+                    Vector2D vec = (new Vector2D(i, j) + new Vector2D(0.5f, 0.5f)) * Program.Space_Size;
+                    DX.SetDrawBright(LandNutrition[i, j].Red >> nbit, LandNutrition[i, j].Green >> nbit, LandNutrition[i, j].Blue >> nbit);
+                    Drawer.AddDrawList(vec, 0, 36, nessuihunsyutukouGraphicHandle);
+                    /*
                     Vector2D vec1 = new Vector2D(i, j) * Program.Space_Size;
                     Vector2D vec2 = new Vector2D(i + 1, j) * Program.Space_Size;
                     Vector2D vec3 = new Vector2D(i, j + 1) * Program.Space_Size;
@@ -64,9 +72,10 @@ namespace LifeGame
                     DX.DrawTriangle(vec1.iX, vec1.iY, vec2.iX, vec2.iY, vec3.iX, vec3.iY,
                                     DX.GetColor(LandNutrition[i,j].Red >> nbit, LandNutrition[i,j].Green >> nbit, LandNutrition[i,j].Blue >> nbit), DX.TRUE);
                     DX.DrawTriangle(vec2.iX, vec2.iY, vec3.iX, vec3.iY, vec4.iX, vec4.iY,
-                                    DX.GetColor(LandNutrition[i,j].Red >> nbit, LandNutrition[i,j].Green>> nbit, LandNutrition[i,j].Blue >> nbit), DX.TRUE);
+                                    DX.GetColor(LandNutrition[i,j].Red >> nbit, LandNutrition[i,j].Green>> nbit, LandNutrition[i,j].Blue >> nbit), DX.TRUE);*/
                 }
             }
+            DX.SetDrawBright(255, 255, 255);
         }
 
         public void AddCList(Vector2D position, Creature pointer)
