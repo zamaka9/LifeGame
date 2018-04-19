@@ -6,19 +6,18 @@ using System.Threading.Tasks;
 
 namespace LifeGame.Acts
 {
-    //仮実装
-    class NitrogenFixation : Act
+    //糖新生。タンパク質からグルコースをつくります
+    class Gluconeogenesis : Act
     {
 
         public override void Initialize(Creature owner, int level)
         {
             base.Initialize(owner, level);
-            costbase = new Nutrition(owner.Size*5, 0, owner.Size)*level;
-            requirementbase = new Nutrition(0, 0, owner.Size * 5000);
+            costbase = new Nutrition(0, owner.Size*2, 0)*level;
         }
         public override bool Update()
         {
-            Nutrition newNut = new Nutrition(0, owner.Size * 3, 0)*level;
+            Nutrition newNut = new Nutrition(owner.Size, 0,0)*level;
             owner.Nutrition += newNut;
 
             return true;

@@ -13,25 +13,22 @@ namespace LifeGame.Acts
         public override void Initialize(Creature owner, int level)
         {
             base.Initialize(owner, level);
-            nutToGet = owner.Size * 100*level;
-            costbase = new Nutrition(owner.Size*10, owner.Size*10, owner.Size)*level;
+            nutToGetRatio = owner.Size *level*0.000005;
+            costbase = new Nutrition(owner.Size*2, owner.Size*2, owner.Size)*level;
         }
         public override bool Update()
         {
             Nutrition landnut = Land.GetLandNutrition(owner.Position);
-            if (landnut.Sum > nutToGet*2)
-            {
-                Nutrition predation = landnut.PercentNonNegative(nutToGet);
+                Nutrition predation = landnut.PercentNonNegative((int)(landnut.Sum*nutToGetRatio));
 
                 Land.SetLandNutrition(owner.Position, landnut - predation);
                 owner.Nutrition += predation;
                 return true;
-            }
-            return false;
+            
         }
         //タイマーはActMgrの方で管理
 
-        public int nutToGet;
+        public double nutToGetRatio;
     }
 
     

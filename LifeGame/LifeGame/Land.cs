@@ -26,30 +26,35 @@ namespace LifeGame
             nessuihunsyutukouGraphicHandle = DX.LoadGraph("Data/nessuihunsyutukou.png");
 
             //Spaceを初期化
-            Space = new List<Creature>[Program.Space_X, Program.Space_Y];
-            LandNutrition = new Nutrition[Program.Space_X, Program.Space_Y];
-            LandformsManager = new LandformsManager();
+            Sections = new Section[Program.Space_X, Program.Space_Y];
 
-            LandformsManager.Initialize(this);
-
-            for (int i = 0; i < Program.Space_X; i++)
+            for (int x = 0; x < Program.Space_X; x++)
             {
-                for (int j = 0; j < Program.Space_Y; j++)
+                for (int y = 0; y < Program.Space_Y; y++)
                 {
-                    Space[i, j] = new List<Creature>();
-                    LandNutrition[i, j] = new Nutrition();
-                    LandNutrition[i, j].Rand(Nutrition.MaxValue/4, Nutrition.MaxValue / 2);
+                    Sections[x, y] = new Section();
+                    Sections[x, y].CList = new List<Creature>();
+                    Sections[x, y].Nut = new Nutrition();
+                    Sections[x, y].Nut.Rand(Nutrition.MaxValue / 4, Nutrition.MaxValue / 2);
+                    if (Program.Rand.Next(10) == 0)
+                    {
+                        Sections[x, y].Landform = CreateLandform(1);
+                    }
+                    else
+                    {
+                        Sections[x, y].Landform = CreateLandform(0);
+                    }
+                    Sections[x, y].Initialize(this, x, y);
                 }
             }
-
+            
         }
 
         public void Update()
         {
-            LandformsManager.Update();
-            foreach(List<Creature> space in Space)
+            foreach(Section sec in Sections)
             {
-                space.Clear();
+                sec.Update();
             }
         }
 
@@ -58,7 +63,7 @@ namespace LifeGame
             for(int i = 0; i < Program.Space_X; i++){
                 for(int j = 0; j < Program.Space_Y; j++){
                     Vector2D vec = (new Vector2D(i, j) + new Vector2D(0.5f, 0.5f)) * Program.Space_Size;
-                    DX.SetDrawBright(LandNutrition[i, j].Red >> nbit, LandNutrition[i, j].Green >> nbit, LandNutrition[i, j].Blue >> nbit);
+                    DX.SetDrawBright(Sections[i, j].Nut.Red >> nbit, Sections[i, j].Nut.Green >> nbit, Sections[i, j].Nut.Blue >> nbit);
                     Drawer.AddDrawList(vec, 0, 36, nessuihunsyutukouGraphicHandle);
                     /*
                     Vector2D vec1 = new Vector2D(i, j) * Program.Space_Size;
@@ -82,45 +87,78 @@ namespace LifeGame
         {
             int X = ReturnX(position.X);
             int Y = ReturnY(position.Y);
-            Space[X,Y].Add(pointer);
-            pointer.TargetList = (Space[X,Y]);
+            Sections[X,Y].CList.Add(pointer);
+            pointer.TargetList = (Sections[X, Y].CList);
         }
 
 	    public List<Creature> GetCList(Vector2D position)
         {
             int X = ReturnX(position.X);
             int Y = ReturnY(position.Y);
-            return Space[X,Y];
+            return Sections[X, Y].CList;
         }
 
     	public Nutrition GetLandNutrition(Vector2D position)
         {
             int X = ReturnX(position.X);
             int Y = ReturnY(position.Y);
-            return LandNutrition[X,Y];
+            return Sections[X, Y].Nut;
         }
 
     	public void SetLandNutrition(Vector2D position, Nutrition Nut)
         {
             int X = ReturnX(position.X);
             int Y = ReturnY(position.Y);
-            LandNutrition[X,Y] = Nut;
+            Sections[X, Y].Nut = Nut;
         }
 
         public LandFormBase GetLandformAt(int x,int y)
         {
-            return LandformsManager.landFormBase[x, y];
+            return Sections[x, y].Landform;
         }
 
         public LandFormBase GetLandformAt(Vector2D vector)
         {
-            return LandformsManager.landFormBase[ReturnX(vector.X), ReturnY(vector.Y)];
+            return GetLandformAt(ReturnX(vector.X), ReturnY(vector.Y));
         }
 
-        List<Creature>[,] Space;
-        Nutrition[,] LandNutrition;
+
+        /// <summary>
+        ///LandFormBaseRegisterのRegister()の中で登録してください
+        /// </summary>
+        /// <param name="id"> LandFormBase固有のidです</param>
+        /// <param name="landformType">Landformのクラスを表すTypeです</param>
+        /// <returns>成功したらtrue,失敗したらfalseを返します</returns>
+        public static bool RegisterLandform(int id, Type landformType)
+        {
+            if (!landformType.IsSubclassOf(typeof(LandFormBase)))
+            {
+                Console.WriteLine(landformType.ToString() + "はLandFormBaseクラスを継承していないため登録できません");
+                return false;
+            }
+            if (landformClassMap.ContainsKey(id))
+            {
+                Console.WriteLine(landformType.ToString() + "と" + landformClassMap[id].ToString() + "のIDが両方とも" + id + "のため登録できません");
+                return false;
+            }
+            //Console.WriteLine(actType.ToString()+ "," + id);
+            landformClassMap.Add(id, landformType);
+            landformIdList.Add(id);
+            return true;
+        }
+
+        public LandFormBase CreateLandform(int key)
+        {
+            var args = new Object[] { };
+            LandFormBase actInstance = (LandFormBase)(Activator.CreateInstance(landformClassMap[key], args));
+            actInstance.id = key;
+            return actInstance;
+        }
+
+        public static IDictionary<int, Type> landformClassMap = new Dictionary<int, Type>();
+        public static List<int> landformIdList = new List<int>();
         Drawer Drawer;
-        LandformsManager LandformsManager;
+        public Section[,] Sections;
 
         int ReturnX(float x)
         {

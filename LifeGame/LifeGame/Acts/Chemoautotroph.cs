@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LifeGame.Landforms;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,11 +18,14 @@ namespace LifeGame.Acts
         }
         public override bool Update()
         {
-            if (owner.mgr.Land.GetLandformAt(owner.Position).id == 1)
+            LandFormBase landform = owner.mgr.Land.GetLandformAt(owner.Position);
+            if (landform.id == 1)
             {
-                Nutrition newNut = new Nutrition(owner.Size * 8, owner.Size*4, owner.Size*4) * level;
+                //Console.WriteLine(((HydrothermalVent)landform).LastCreaturesGave + "," + ((HydrothermalVent)landform).NutRatio);
+                Nutrition newNut = new Nutrition(2,1,1)*( 20f * (float)owner.Size * (float)level * ((HydrothermalVent)landform).NutRatio);
+                ((HydrothermalVent)landform).LastCreaturesGave+=level;
                 owner.Nutrition += newNut;
-                Console.WriteLine(newNut.ToString());
+                //Console.WriteLine(newNut.ToString());
                 return true;
             }
             else

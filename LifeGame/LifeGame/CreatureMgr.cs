@@ -30,6 +30,7 @@ namespace LifeGame
 
         public void Update()
         {
+           
             foreach (Creature newParent in ParentList)
             {
                 CreatureList.Add(new Creature(this, newParent));
@@ -46,13 +47,14 @@ namespace LifeGame
             bool isTimeToUpdate = (++timer % timerMax) == 0;
             if (isTimeToUpdate)
             {
-
                 foreach (Creature creature in CreatureList.Where(x => x.Existence == true))
                 {
                     creature.Update();
 
                 }
 
+                //LandのUpdateとCreatureのUpdateがずれてるため仮の処置
+                Land.Update();
             }
             foreach (Creature creature in CreatureList.Where(x => x.Existence == true))
             {

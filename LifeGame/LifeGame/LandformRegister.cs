@@ -11,8 +11,8 @@ namespace LifeGame
     {
         public static void Register()
         {
-            LandformsManager.RegisterAct(0, typeof(LandformEmpty));
-            LandformsManager.RegisterAct(1, typeof(HydrothermalVent));
+            Land.RegisterLandform(0, typeof(LandformEmpty));
+            Land.RegisterLandform(1, typeof(HydrothermalVent));
         }
     }
 }

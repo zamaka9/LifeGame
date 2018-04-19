@@ -26,6 +26,7 @@ namespace LifeGame
             ActMgr.RegisterAct(10, typeof(NitrogenFixation));
             ActMgr.RegisterAct(11, typeof(Chemoautotroph));
             ActMgr.RegisterAct(12, typeof(Stabilize));
+            ActMgr.RegisterAct(13, typeof(Gluconeogenesis));
         }
     }
 }

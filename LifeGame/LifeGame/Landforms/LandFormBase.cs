@@ -9,7 +9,7 @@ namespace LifeGame.Landforms
     abstract class LandFormBase
     {
         public int posX, posY;
-        public LandformsManager mgr;
+        public Land mgr;
         public int id;
 
         /// <summary>
@@ -18,7 +18,7 @@ namespace LifeGame.Landforms
         /// <param name="land"></param>
         /// <param name="x"></param>
         /// <param name="y"></param>
-        public virtual void Initialize(LandformsManager mgr, int x, int y)
+        public virtual void Initialize(Land mgr, int x, int y)
         {
             this.mgr = mgr;
             posX = x;

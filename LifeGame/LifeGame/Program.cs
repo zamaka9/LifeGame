@@ -75,7 +75,7 @@ namespace LifeGame
 
                 CreatureMgr.Update();
                 God.Update();
-                Land.Update();
+                //LandのUpdateとCreatureのUpdateがずれてるため仮の処置としてCreatureMgrに移動
 
                 Land.Draw();
                 CreatureMgr.Draw();
