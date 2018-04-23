@@ -35,7 +35,7 @@ namespace LifeGame
                     Sections[x, y] = new Section();
                     Sections[x, y].CList = new List<Creature>();
                     Sections[x, y].Nut = new Nutrition();
-                    Sections[x, y].Nut.Rand(Nutrition.MaxValue / 4, Nutrition.MaxValue / 2);
+                    Sections[x, y].Nut.Rand(Nutrition.MaxValue / 12, Nutrition.MaxValue / 6);
                     if (Program.Rand.Next(10) == 0)
                     {
                         Sections[x, y].Landform = CreateLandform(1);

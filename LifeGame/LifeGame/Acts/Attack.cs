@@ -14,7 +14,7 @@ namespace LifeGame.Acts
             base.Initialize(owner, level);
             this.strength = owner.Size*level;
             costbase = new Nutrition(strength, 100, 0);
-            requirementbase = new Nutrition(0, owner.Size * 5000, owner.Size * 10000);
+            requirementbase = new Nutrition(0, owner.Size * 1000, owner.Size * 1000);
             //basicCostbase = new Nutrition(100, 1000, 100);
         }
 

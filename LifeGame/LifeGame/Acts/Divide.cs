@@ -9,7 +9,7 @@ namespace LifeGame.Acts
         public override void Initialize(Creature owner,int level)
         {
             base.Initialize(owner,level);
-            costbase = new Nutrition(owner.Size * 1200, owner.Size * 1200, 1000);
+            costbase = new Nutrition(owner.Size * 300, owner.Size * 300, 1000);
             requirementbase = costbase * 3;
         }
 
