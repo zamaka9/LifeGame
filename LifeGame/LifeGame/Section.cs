@@ -17,6 +17,7 @@ namespace LifeGame
         public Nutrition Nut;
         public List<Creature> CList;
         public LandFormBase Landform;
+        public int Height;
 
         public void Initialize(Land land,int x,int y)
         {

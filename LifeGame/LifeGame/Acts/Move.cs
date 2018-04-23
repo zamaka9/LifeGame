@@ -27,7 +27,7 @@ namespace LifeGame.Acts
             if (owner.Nutrition.Sum > l)
             {
                 SpeedLevel = 0;
-                owner.Velocity = new Vector2D();
+                owner.VelocityStream = new Vector2D();
                 return false;
             }
             
@@ -54,7 +54,7 @@ namespace LifeGame.Acts
                 Direction = (float)((Program.Rand.Next(359) / 180.0f) * Math.PI);
                 Speed = MaxSpeed * SpeedLevel / 10;
                 //速度はCreatureの方で持つようにしました
-                owner.Velocity = new Vector2D((float)Math.Cos(Direction), (float)Math.Sin(Direction)) * Speed;
+                owner.VelocityStream = new Vector2D((float)Math.Cos(Direction), (float)Math.Sin(Direction)) * Speed;
                 return true;
             }
             return false;

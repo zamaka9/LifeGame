@@ -49,7 +49,7 @@ namespace LifeGame
             Existence = true;
             Alive = true;
 
-            Velocity=new Vector2D();
+            VelocityStream=new Vector2D();
             LastVelocityMultiplier = 60f/(float)mgr.TimerMax;
             Velocitycache = new Vector2D();
         }
@@ -61,19 +61,39 @@ namespace LifeGame
                 
                 MaxHP-=agePerTick;
                 HP-=agePerTick;
+
                 if (!isStable)
                 {
+
+                    int height = mgr.Land.GetHeightAt(Position);
+                    if (!(mgr.Land.ReturnX(Position.X) == mgr.Land.ReturnX(LastPosition.X)
+                        && mgr.Land.ReturnY(Position.Y) == mgr.Land.ReturnY(LastPosition.Y)))
+                    {
+                        if (height == 5 || height == 6)
+                        {
+                            VelocityStream = new Vector2D();
+                        }
+                        else if (height == 4)
+                        {
+                            VelocityStream /= 4;
+                        }
+                    }
                     int freq = 10;
-                    int SpeedLevel = 5;
+                    int SpeedLevel = 3;
                     float MaxSpeed = 0.5F;
-                    if (Program.Rand.Next(freq) == 0)
+                    if (height<5 && Program.Rand.Next(freq) == 0)
                     {
 
                         float Direction = (float)((Program.Rand.Next(359) / 180.0f) * Math.PI);
                         float Speed = MaxSpeed * SpeedLevel / 10;
                         //速度はCreatureの方で持つようにしました
-                        Velocity = new Vector2D((float)Math.Cos(Direction), (float)Math.Sin(Direction)) * Speed;
+                        VelocityStream = new Vector2D((float)Math.Cos(Direction), (float)Math.Sin(Direction)) * Speed;
+                        if (height == 4)
+                        {
+                            VelocityStream /= 4;
+                        }
                     }
+
                 }
                 ActMgr.Update();
                 Nutrition -= new Nutrition(Size*5, Size, Size);
@@ -118,6 +138,7 @@ namespace LifeGame
             }
 
             Time++;
+            LastPosition = Position;
         }
         public void Draw(int animTime,int speed)
         {
@@ -140,7 +161,10 @@ namespace LifeGame
             if(mgr.hasTimerUpdated){
                 LastVelocityMultiplier=60f/(float)mgr.TimerMax;
             }
-                Position += Velocitycache;
+                if (!isStable)
+                {
+                    Position += Velocitycache;
+                }
             
                 //何だか生物が変なところ行くので仮の処置
                 if (Position.X < 0)
@@ -222,6 +246,7 @@ namespace LifeGame
         public Nutrition Nutrition { get; set; } = new Nutrition();//現在栄養
         // 座標
         public Vector2D Position { get; set; } = new Vector2D();
+        public Vector2D LastPosition { get; set; } = new Vector2D();
         public int Time { get; private set; } = 0;//時間
         int deadTime = 0;//死亡時刻
 
@@ -234,7 +259,7 @@ namespace LifeGame
         public CreatureMgr mgr;//CreatureMgrを格納する。コンストラクタで登録。staticにするか迷ったけど特に必要性がないので普通で
 
         private Vector2D velocity;
-        public Vector2D Velocity
+        public Vector2D VelocityStream
         {
             
             set
@@ -256,7 +281,7 @@ namespace LifeGame
             
             set
             {
-                Velocitycache = Velocity*value;
+                Velocitycache = VelocityStream*value;
                 lastVelocityMultiplier = value;
             }
             get

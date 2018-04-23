@@ -18,7 +18,9 @@ namespace LifeGame.Acts
         }
         public override bool Update()
         {
-            Nutrition newNut = new Nutrition(owner.Size*4, 0, 0)*level;
+            int height = Land.GetHeightAt(owner.Position);
+            int value = height * 3 - 2;
+            Nutrition newNut = new Nutrition(value, 0, 0)*level*owner.Size;
             owner.Nutrition += newNut;
 
             return true;
