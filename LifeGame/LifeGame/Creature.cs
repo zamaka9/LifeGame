@@ -220,6 +220,7 @@ namespace LifeGame
 
         public int HP { get; set; } = 0;//現在体力
         public Nutrition Nutrition { get; set; } = new Nutrition();//現在栄養
+        public int Energy { get; set; } = 1;
         // 座標
         public Vector2D Position { get; set; } = new Vector2D();
         public int Time { get; private set; } = 0;//時間

@@ -16,7 +16,7 @@ namespace LifeGame.Acts
             nutToGetRatio = owner.Size *level*0.000005;
             costbase = new Nutrition(owner.Size*2, owner.Size*2, owner.Size)*level;
         }
-        public override bool Update()
+        public override double Update(double coeff)
         {
             Nutrition landnut = Land.GetLandNutrition(owner.Position);
                 Nutrition predation = landnut.PercentNonNegative((int)(landnut.Sum*nutToGetRatio));

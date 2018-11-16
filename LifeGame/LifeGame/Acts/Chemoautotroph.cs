@@ -16,7 +16,7 @@ namespace LifeGame.Acts
             base.Initialize(owner, level);
             costbase = new Nutrition(owner.Size, owner.Size, owner.Size) *level;
         }
-        public override bool Update()
+        public override double Update(double coeff)
         {
             LandFormBase landform = owner.mgr.Land.GetLandformAt(owner.Position);
             if (landform.id == 1)
@@ -26,11 +26,11 @@ namespace LifeGame.Acts
                 ((HydrothermalVent)landform).LastCreaturesGave+=level;
                 owner.Nutrition += newNut;
                 //Console.WriteLine(newNut.ToString());
-                return true;
+                return coeff;
             }
             else
             {
-                return false;
+                return 0;
             }
         }
     }

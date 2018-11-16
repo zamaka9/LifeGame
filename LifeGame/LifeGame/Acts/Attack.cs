@@ -12,13 +12,11 @@ namespace LifeGame.Acts
         public override void Initialize(Creature owner, int level)
         {
             base.Initialize(owner, level);
-            this.strength = owner.Size*level;
-            costbase = new Nutrition(strength, 100, 0);
-            requirementbase = new Nutrition(0, owner.Size * 5000, owner.Size * 10000);
-            //basicCostbase = new Nutrition(100, 1000, 100);
+            Left = new Formula(0, 0, 0, 1);
+            Right = new Formula(0, 0, 0, 0);
         }
 
-        public override bool Update()
+        public override double Update(double coeff)
         {
             var target = owner.TargetList;
             if (target != null)
@@ -29,15 +27,14 @@ namespace LifeGame.Acts
                     {
                         if (owner.Size - t.Size>10)
                         {
-                            t.HP -= strength;
-                            return true;
+                            t.HP -= (int)coeff;
+                            return coeff;
                         }
                     }
                 }
             }
-            return false;
+            return 0;
         }
-        public int strength;
     }
 
     

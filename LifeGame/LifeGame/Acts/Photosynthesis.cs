@@ -13,17 +13,14 @@ namespace LifeGame.Acts
         public override void Initialize(Creature owner, int level)
         {
             base.Initialize(owner, level);
-            costbase = new Nutrition(owner.Size, owner.Size, owner.Size)*level;
-            requirementbase = new Nutrition(0, owner.Size*2000, owner.Size*5000)*level;
+            Left = new Formula(0, 0, 0, 0);
+            Right = new Formula(0, 0, 0, 24);
         }
-        public override bool Update()
+        public override bool Update(double coeff)
         {
-            Nutrition newNut = new Nutrition(owner.Size*4, 0, 0)*level;
-            owner.Nutrition += newNut;
-
             return true;
         }
-        public int requirement;
+       
     }
 
     
