@@ -21,7 +21,7 @@ namespace LifeGame.Acts
             if (owner.Nutrition.Sum > l)
             {
                 owner.isStable = true;
-                owner.Velocity = new Vector2D();
+                //owner.VelocityStream = new Vector2D();
                 return true;
             }
             owner.isStable = false;

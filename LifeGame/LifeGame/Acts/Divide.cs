@@ -10,7 +10,7 @@ namespace LifeGame.Acts
         {
             base.Initialize(owner,level);
             costbase = new Nutrition(owner.Size * 1200, owner.Size * 1200, 1000);
-            requirement = costbase * 3;
+            requirementbase = costbase * 3;
             Left = new Formula(0, 0, 0, 12);
             Right = new Formula(0, 0, 0, 0);
         }

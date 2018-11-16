@@ -20,7 +20,7 @@ namespace LifeGame
 
         }
 
-        public void Initialize(Drawer drawer){
+        public void Initialize(Drawer drawer) {
             Drawer = drawer;
 
             nessuihunsyutukouGraphicHandle = DX.LoadGraph("Data/nessuihunsyutukou.png");
@@ -35,8 +35,42 @@ namespace LifeGame
                     Sections[x, y] = new Section();
                     Sections[x, y].CList = new List<Creature>();
                     Sections[x, y].Nut = new Nutrition();
-                    Sections[x, y].Nut.Rand(Nutrition.MaxValue / 4, Nutrition.MaxValue / 2);
-                    if (Program.Rand.Next(10) == 0)
+                    Sections[x, y].Nut.Rand(Nutrition.MaxValue / 12, Nutrition.MaxValue / 6);
+
+                   
+                }
+            }
+            for (int x = 0; x < Program.Space_X; x++)
+            {
+                for (int y = 0; y < Program.Space_Y; y++)
+                {
+                    int rand = Program.Rand.Next(100);
+                    if (rand == 0) {
+                        CreateHeight(Sections, x, y, 5);
+                    }
+                    else if (rand == 1 || rand==2)
+                    {
+                        CreateHeight(Sections, x, y, 4);
+                    }
+                    else if (rand>2 && rand<=10)
+                    {
+                        CreateHeight(Sections, x, y, 3);
+                    }
+                    else if (rand>10 && rand<=20)
+                    {
+                        CreateHeight(Sections, x, y, 2);
+                    }
+                    else if (rand > 20 && rand <= 40)
+                    {
+                        CreateHeight(Sections, x, y, 1);
+                    }
+                }
+            }
+            for (int x = 0; x < Program.Space_X; x++)
+            {
+                for (int y = 0; y < Program.Space_Y; y++)
+                {
+                    if (Sections[x, y].Height == 1 && Program.Rand.Next(2) == 0)
                     {
                         Sections[x, y].Landform = CreateLandform(1);
                     }
@@ -47,7 +81,34 @@ namespace LifeGame
                     Sections[x, y].Initialize(this, x, y);
                 }
             }
-            
+        }
+
+        public void CreateHeight(Section[,] sec,int posx,int posy,int maxheight)
+        {
+            int height = maxheight;
+            int range = 1;
+            for(int i = 0; i < maxheight; i++)
+            {
+                for(int x = posx - range / 2; x <= posx + range / 2; x++)
+                {
+                    if (x < 0 || x >= sec.GetLength(0)) continue;
+                    for (int y = posy - range / 2; y <= posy + range / 2; y++)
+                    {
+                        if (y < 0 || y >= sec.GetLength(1)) continue;
+                        if (sec[x, y].Height < height)
+                        {
+                            sec[x, y].Height = height;
+                        }
+                        else if (sec[x, y].Height == height)
+                        {
+                            sec[x, y].Height = height+1;
+                        }
+                    }
+                }
+                height--;
+                range += 2;
+
+            }
         }
 
         public void Update()
@@ -122,6 +183,16 @@ namespace LifeGame
             return GetLandformAt(ReturnX(vector.X), ReturnY(vector.Y));
         }
 
+        public int GetHeightAt(int x, int y)
+        {
+            return Sections[x, y].Height;
+        }
+
+        public int GetHeightAt(Vector2D vector)
+        {
+            return GetHeightAt(ReturnX(vector.X), ReturnY(vector.Y));
+        }
+
 
         /// <summary>
         ///LandFormBaseRegisterのRegister()の中で登録してください
@@ -160,7 +231,7 @@ namespace LifeGame
         Drawer Drawer;
         public Section[,] Sections;
 
-        int ReturnX(float x)
+        public int ReturnX(float x)
         {
             int X = (int)(x * Program.Space_X / Program.World_X);
             if (X < 0)
@@ -174,7 +245,7 @@ namespace LifeGame
             return X;
         }
 
-        int ReturnY(float y)
+        public int ReturnY(float y)
         {
             int Y = (int)(y * Program.Space_Y / Program.World_Y);
             if (Y < 0)
@@ -187,6 +258,7 @@ namespace LifeGame
             }
             return Y;
         }
+        
         public static int nbit = 16;//栄養値を16ビット右にシフトする(=65536で割る)と最大255になる
     }
 }

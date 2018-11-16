@@ -16,11 +16,11 @@ namespace LifeGame.Acts
             Left = new Formula(0, 0, 0, 0);
             Right = new Formula(0, 0, 0, 24);
         }
+    }
         public override bool Update(double coeff)
         {
             return true;
         }
-       
     }
 
     

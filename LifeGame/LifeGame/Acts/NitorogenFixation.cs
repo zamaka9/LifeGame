@@ -13,7 +13,6 @@ namespace LifeGame.Acts
         public override void Initialize(Creature owner, int level)
         {
             base.Initialize(owner, level);
-            //costbase = new Nutrition(owner.Size*5, 0, 0)*level;
             Left = new Formula(0, 0, 0, 16);
             Right = new Formula(0, 2, 0, 0);
         }
